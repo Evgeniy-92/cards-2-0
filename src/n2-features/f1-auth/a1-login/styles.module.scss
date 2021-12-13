@@ -1,0 +1,163 @@
+.loginMain {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(180deg, #E6D4DE 0%, #9890C7 100%);
+}
+
+.wrapper {
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login {
+  max-width: 420px;
+  width: 100%;
+  height: 600px;
+  border-radius: 10px;
+  background: #F9F9FE;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.intro {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  h1 {
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 26px;
+    line-height: 39px;
+    color: #2D2E46;
+    margin: 25px 0;
+  }
+
+  h3 {
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 33px;
+    color: #2D2E46;
+    margin-bottom: 10px;
+  }
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: inherit;
+}
+
+.inputsBox {
+  width: 345px;
+  max-width: 100%;
+  position: relative;
+  //border: .1px solid;
+  margin-top: 30px;
+
+  label {
+    position: absolute;
+    height: 0;
+    top: -5px;
+    left: 10px;
+    font-family: SF UI Display;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 20px;
+    color: #24254A;
+    opacity: 0.5;
+  }
+}
+
+.input {
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0);
+  border: none;
+  border-bottom: 2px solid #a4a3a3;
+  padding: 5px 0;
+  outline: none;
+  transition: .4s all;
+  color: #444;
+
+  &:focus {
+    border: none;
+    border-bottom: 2px solid #181883;
+    outline: none;
+  }
+}
+
+.forgot {
+  font-family: SF UI Display;
+  font-style: normal;
+  font-size: 14px;
+  line-height: 17px;
+  display: flex;
+  width: 345px;
+  max-width: 100%;
+  justify-content: flex-end;
+  margin: 45px 0 90px 0;
+  color: #2D2E46;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.next {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+}
+
+.btn {
+  max-width: 270px;
+  width: 100%;
+  height: 36px;
+  background: #21268F;
+  font-family: SF UI Display;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 19px;
+  color: #ECECF9;
+  text-align: center;
+  letter-spacing: 0.01em;
+  border-radius: 30px;
+  margin-bottom: 30px;
+}
+
+.notAccount {
+  font-family: SF UI Display;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 24px;
+  text-align: center;
+  color: #2D2E46;
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+.singUp {
+  font-family: SF UI Display;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+  text-align: center;
+  color: #21268F;
+  margin-top: 13px;
+  cursor: pointer;
+}
+
