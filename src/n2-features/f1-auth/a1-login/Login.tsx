@@ -7,6 +7,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../../n1-main/m2-bll/store";
 import {Navigate} from 'react-router-dom';
 import SuperCheckbox from "../../../n1-main/m1-ui/common/c3-SuperCheckbox/SuperCheckbox";
+import ContainerAuth from '../../../n1-main/m1-ui/common/c4-containerAuth';
 
 export const Login = () => {
     const dispatch = useDispatch()
@@ -34,58 +35,58 @@ export const Login = () => {
     if (isLogin) return <Navigate to={'/profile'}/>
 
     return (
-        <div className={styles.loginMain}>
-            <div className={styles.wrapper}>
-                <div className={styles.login}>
+        <ContainerAuth>
 
-                    <div className={styles.intro}>
-                        <h1>It-incubator</h1>
-                        <h3> Sign In</h3>
-                    </div>
-                    <form autoComplete="off" onSubmit={formik.handleSubmit}>
-                        <div className={styles.inputs}>
-                            <div className={styles.inputsBox}>
-                                <label className={styles.label}>Email</label>
-                                <SuperInputText name={'email'} className={styles.input}
-                                                onChange={formik.handleChange}
-                                                value={formik.values.email}/>
-                            </div>
-                            <div className={styles.inputsBox}>
-                                <label className={styles.label}>Password</label>
-                                <SuperInputText name={'password'} type={'password'} className={styles.input}
-                                                onChange={formik.handleChange}
-                                                value={formik.values.password}/>
-                            </div>
-                            <div className={styles.remember}>
-                                <span>Remember me</span>
-                                <SuperCheckbox onChange={formik.handleChange}
-                                               checked={formik.values.rememberMe}
-                                               name={'rememberMe'}/>
-                            </div>
-                            <span className={styles.error}>
+            <div className={styles.login}>
+
+                <div className={styles.intro}>
+                    <h1>It-incubator</h1>
+                    <h3> Sign In</h3>
+                </div>
+
+                <form autoComplete="off" onSubmit={formik.handleSubmit}>
+                    <div className={styles.inputs}>
+                        <div className={styles.inputsBox}>
+                            <label className={styles.label}>Email</label>
+                            <SuperInputText name={'email'} className={styles.input}
+                                            onChange={formik.handleChange}
+                                            value={formik.values.email}/>
+                        </div>
+                        <div className={styles.inputsBox}>
+                            <label className={styles.label}>Password</label>
+                            <SuperInputText name={'password'} type={'password'} className={styles.input}
+                                            onChange={formik.handleChange}
+                                            value={formik.values.password}/>
+                        </div>
+                        <div className={styles.remember}>
+                            <span>Remember me</span>
+                            <SuperCheckbox onChange={formik.handleChange}
+                                           checked={formik.values.rememberMe}
+                                           name={'rememberMe'}/>
+                        </div>
+                        <span className={styles.error}>
                                 {error}
                             </span>
-                            <div className={styles.forgot}>
+                        <div className={styles.forgot}>
 
-                                <p>
-                                    Forgot Password
-                                </p>
-                            </div>
-                        </div>
-
-                        <div className={styles.next}>
-                            <SuperButton type={'submit'} className={styles.btn}>Login</SuperButton>
-                            <span className={styles.notAccount}>
-                            Don’t have an account?
-                        </span>
-                            <p className={styles.singUp}>
-                                Sing Up
+                            <p>
+                                Forgot Password
                             </p>
                         </div>
-                    </form>
-                </div>
-            </div>
+                    </div>
 
-        </div>
+                    <div className={styles.next}>
+                        <SuperButton type={'submit'} className={styles.btn}>Login</SuperButton>
+                        <span className={styles.notAccount}>
+                            Don’t have an account?
+                        </span>
+                        <p className={styles.singUp}>
+                            Sing Up
+                        </p>
+                    </div>
+                </form>
+
+            </div>
+        </ContainerAuth>
     )
 }

@@ -1,28 +1,7 @@
-.loginMain {
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  background: linear-gradient(180deg, #E6D4DE 0%, #9890C7 100%);
-}
-
-.wrapper {
-  max-width: 1400px;
-  width: 100%;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+@import "src/styles/mixin";
 
 .login {
-  max-width: 420px;
-  width: 100%;
-  height: 600px;
-  border-radius: 10px;
-  background: #F9F9FE;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  @include mane_content;
 }
 
 .intro {
@@ -60,42 +39,7 @@
 }
 
 .inputsBox {
-  width: 345px;
-  max-width: 100%;
-  position: relative;
-  //border: .1px solid;
-  margin-top: 30px;
-
-  label {
-    position: absolute;
-    height: 0;
-    top: -5px;
-    left: 10px;
-    font-family: SF UI Display;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 13px;
-    line-height: 20px;
-    color: #24254A;
-    opacity: 0.5;
-  }
-}
-
-.input {
-  width: 100%;
-  background-color: rgba(255, 255, 255, 0);
-  border: none;
-  border-bottom: 2px solid #a4a3a3;
-  padding: 5px 0;
-  outline: none;
-  transition: .4s all;
-  color: #444;
-
-  &:focus {
-    border: none;
-    border-bottom: 2px solid #181883;
-    outline: none;
-  }
+  @include input_styles ;
 }
 
 .forgot {
@@ -121,20 +65,7 @@
 }
 
 .btn {
-  max-width: 270px;
-  width: 100%;
-  height: 36px;
-  background: #21268F;
-  font-family: SF UI Display;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 22px;
-  line-height: 19px;
-  color: #ECECF9;
-  text-align: center;
-  letter-spacing: 0.01em;
-  border-radius: 30px;
-  margin-bottom: 30px;
+  @include button_styles;
 }
 
 .notAccount {
@@ -173,7 +104,6 @@
   align-items: center;
   justify-content: flex-start;
   width: 100%;
-  padding: 0 10px;
 
   input {
     position: relative;

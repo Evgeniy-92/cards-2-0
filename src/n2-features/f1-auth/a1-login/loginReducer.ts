@@ -31,6 +31,7 @@ export const inLoginTC = (data: inLoginType) => (dispatch: Dispatch) => {
     return loginApi.inLogin(data)
         .then((res) => {
             dispatch(setLogin(true))
+            dispatch(setError(''))
         })
         .catch((err) => {
             dispatch(setError(err.response.data.error))
