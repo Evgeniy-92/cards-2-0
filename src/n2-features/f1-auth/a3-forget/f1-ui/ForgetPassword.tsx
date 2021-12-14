@@ -50,7 +50,7 @@ export const ForgetPassword = () => {
                 {isLoading && <div>Loading...</div>}
                 <form onSubmit={formik.handleSubmit}>
                     <div className={styles.inputBox}>
-                        <label>email</label>
+                        <label>Email</label>
                         <SuperInputText
                             type='email'
                             {...formik.getFieldProps('email')}
@@ -62,9 +62,13 @@ export const ForgetPassword = () => {
                     </div>
                     <div className={styles.message}>Enter your email address and will send you further instructions</div>
                     <div className={styles.buttonContainer}>
-                        <SuperButton className={styles.buttonBox} type={'submit'}>Send
-                            Instructions</SuperButton>
+                        <SuperButton className={styles.buttonBox} type={'submit'}>
+                            Send Instructions
+                        </SuperButton>
+                        <span className={styles.remember}>Did you remember your password?</span>
+                        <span className={styles.tryLoggingIn}>Try logging in</span>
                     </div>
+
                 </form>
             </div>
         </ContainerAuth>
