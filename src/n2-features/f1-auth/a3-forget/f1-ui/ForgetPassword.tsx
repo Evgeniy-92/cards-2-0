@@ -7,7 +7,8 @@ import {forgotPassword} from "../f2-bll/recoveryReducer";
 import {FormikErrorRecoveryType} from "../f3-dall/recoveryAPI";
 import {Navigate} from "react-router-dom";
 import {AppRootStateType} from "../../../../n1-main/m2-bll/store";
-
+import ContainerAuth from "../../../../n1-main/m1-ui/common/c4-containerAuth";
+import styles from './ForgetPassword.module.scss'
 
 export const ForgetPassword = () => {
     const dispatch = useDispatch()
@@ -38,24 +39,34 @@ export const ForgetPassword = () => {
         return <Navigate to={'/check-email'}/>
     }
     return (
-        <div>
-            <h1>Forgot your password?</h1>
-            {isLoading && <div>Loading...</div>}
-            <form onSubmit={formik.handleSubmit}>
-                <div>
-                    <SuperInputText
-                    type='email'
-                    {...formik.getFieldProps('email')}
-                    />
-                    {formik.touched.email
-                        && formik.errors.email
-                        && <div style={{color: 'red'}}>{formik.errors.email}</div>}
-                    <div style={{color: 'red'}}>{error}</div>
+        <ContainerAuth>
+            <div className={styles.container}>
+
+                <div className={styles.intro}>
+                    <h1>It-incubator</h1>
+                    <h3>Forgot your password?</h3>
                 </div>
-                <div>
-                    <SuperButton disabled={disabled} type={'submit'}>Send Instructions</SuperButton>
-                </div>
-            </form>
-        </div>
+
+                {isLoading && <div>Loading...</div>}
+                <form onSubmit={formik.handleSubmit}>
+                    <div className={styles.inputBox}>
+                        <label>email</label>
+                        <SuperInputText
+                            type='email'
+                            {...formik.getFieldProps('email')}
+                        />
+                        {formik.touched.email
+                            && formik.errors.email
+                            && <div style={{color: 'red'}}>{formik.errors.email}</div>}
+                        <div style={{color: 'red'}}>{error}</div>
+                    </div>
+                    <div className={styles.message}>Enter your email address and will send you further instructions</div>
+                    <div className={styles.buttonContainer}>
+                        <SuperButton className={styles.buttonBox} type={'submit'}>Send
+                            Instructions</SuperButton>
+                    </div>
+                </form>
+            </div>
+        </ContainerAuth>
     )
 }
