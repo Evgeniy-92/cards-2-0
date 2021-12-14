@@ -51,6 +51,7 @@ export const forgotPassword = (email: string) => (dispatch: Dispatch) => {
         message: `<div style="background-color: #8865c0; padding: 15px">password recovery link: <a href='http://localhost:3000/#/new-pass/$token$'>link</a></div>`,
     }
     dispatch(setDisabled(true))
+    dispatch(setLoading(true))
     recoveryAPI.forgot(data)
         .then(res => {
             dispatch(setIsSuccessAndSetEmail(true, email))
@@ -58,7 +59,11 @@ export const forgotPassword = (email: string) => (dispatch: Dispatch) => {
         .catch(err => {
             dispatch(setError(err.response.data.error))
         })
-        .finally(() => dispatch(setDisabled(false)))
+        .finally(() => {
+            dispatch(setDisabled(false))
+            dispatch(setLoading(false))
+
+        })
 }
 
 

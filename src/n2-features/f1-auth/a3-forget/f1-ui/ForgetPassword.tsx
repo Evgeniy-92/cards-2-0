@@ -12,6 +12,7 @@ import {AppRootStateType} from "../../../../n1-main/m2-bll/store";
 export const ForgetPassword = () => {
     const dispatch = useDispatch()
     const isSuccess = useSelector<AppRootStateType, boolean>(state => state.recovery.isSuccess)
+    const isLoading = useSelector<AppRootStateType, boolean>(state => state.recovery.isLoading)
     const error = useSelector<AppRootStateType, string>(state => state.recovery.error)
     const disabled = useSelector<AppRootStateType, boolean>(state => state.recovery.isDisabledBtn)
     const formik = useFormik({
@@ -39,6 +40,7 @@ export const ForgetPassword = () => {
     return (
         <div>
             <h1>Forgot your password?</h1>
+            {isLoading && <div>Loading...</div>}
             <form onSubmit={formik.handleSubmit}>
                 <div>
                     <SuperInputText
