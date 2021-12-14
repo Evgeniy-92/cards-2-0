@@ -4,7 +4,7 @@ import SuperInputText
     from "../../../../n1-main/m1-ui/common/c2-SuperInputText/SuperInputText";
 import SuperButton from "../../../../n1-main/m1-ui/common/c1-SuperButton/SuperButton";
 import {forgotPassword} from "../f2-bll/recoveryReducer";
-import {FormikErrorType} from "../f3-dall/recoveryAPI";
+import {FormikErrorRecoveryType} from "../f3-dall/recoveryAPI";
 import {Navigate} from "react-router-dom";
 import {AppRootStateType} from "../../../../n1-main/m2-bll/store";
 
@@ -13,12 +13,13 @@ export const ForgetPassword = () => {
     const dispatch = useDispatch()
     const isForgotten = useSelector<AppRootStateType, boolean>(state => state.recovery.isForgotten)
     const error = useSelector<AppRootStateType, string>(state => state.recovery.error)
+    const disabled = useSelector<AppRootStateType, boolean>(state => state.recovery.isDisabledBtn)
     const formik = useFormik({
         initialValues: {
             email: ''
         },
         validate: (values) => {
-            const errors: Partial<FormikErrorType> = {};
+            const errors: Partial<FormikErrorRecoveryType> = {};
             if (!values.email) {
                 errors.email = 'Required';
             } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
@@ -31,6 +32,7 @@ export const ForgetPassword = () => {
             formik.resetForm()
         },
     })
+
     if (isForgotten) {
         return <Navigate to={'/check-email'}/>
     }
@@ -43,10 +45,13 @@ export const ForgetPassword = () => {
                     type='email'
                     {...formik.getFieldProps('email')}
                     />
-                    {error}
+                    {formik.touched.email
+                        && formik.errors.email
+                        && <div style={{color: 'red'}}>{formik.errors.email}</div>}
+                    <div style={{color: 'red'}}>{error}</div>
                 </div>
                 <div>
-                    <SuperButton type={'submit'}>Send Instructions</SuperButton>
+                    <SuperButton disabled={disabled} type={'submit'}>Send Instructions</SuperButton>
                 </div>
             </form>
         </div>

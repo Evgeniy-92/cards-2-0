@@ -2,7 +2,7 @@ import axios, {AxiosResponse} from 'axios'
 
 
 const instance = axios.create({
-    baseURL: 'https://neko-back.herokuapp.com/2.0', /*http://localhost:7542/2.0/*/
+    baseURL: 'https://neko-back.herokuapp.com/2.0',
     withCredentials: true,
 })
 
@@ -18,11 +18,11 @@ export type ResponseForgotType = {
     error: string
 }
 
-export type FormikErrorType = {
+export type FormikErrorRecoveryType = {
     email: string
 }
 
-export type ForgotParamsType = FormikErrorType & {
+export type ForgotParamsType = FormikErrorRecoveryType & {
     from: string
     message: string
 }
