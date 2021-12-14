@@ -47,7 +47,7 @@ export const NewPassword = () => {
     return (
         success
             ? <div>
-                <div style={{color: 'green', fontSize: '20px'}}>Success</div>
+                <div style={{color: 'green', fontSize: '30px'}}>SUCCESS</div>
                 <Link to={'/login'}>Login</Link>
             </div>
 
@@ -75,7 +75,7 @@ export const NewPassword = () => {
                             <div style={{color: 'red'}}>{formik.errors.password2}</div>}
                         {/*<div style={{color: 'red'}}>{error}</div>*/}
                     </div>
-                    <div>{error}</div>
+                    <div style={{color: 'red'}}>{error}</div>
                     <div>
                         <SuperButton type={'submit'}>Send Instructions</SuperButton>
                     </div>

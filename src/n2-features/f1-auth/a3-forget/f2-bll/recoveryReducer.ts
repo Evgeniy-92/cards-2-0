@@ -2,10 +2,11 @@ import {Dispatch} from "redux";
 import {recoveryAPI} from "../f3-dall/recoveryAPI";
 
 const initialState = {
-    isForgotten: false,
+    isSuccess: false,
     email: '',
     error: '',
-    isDisabledBtn: false
+    isDisabledBtn: false,
+    isLoading: false
 }
 
 export const recoveryReducer = (state: RecoveryInitialStateType = initialState, action: RecoveryActionType) => {
@@ -13,7 +14,7 @@ export const recoveryReducer = (state: RecoveryInitialStateType = initialState, 
         case "FORGOT-PASSWORD":
             return {
                 ...state,
-                isForgotten: action.value,
+                isSuccess: action.value,
                 email: action.email
             }
         case "SET-ERROR":
@@ -26,15 +27,21 @@ export const recoveryReducer = (state: RecoveryInitialStateType = initialState, 
                 ...state,
                 isDisabledBtn: action.value
             }
+        case "SET-LOADING":
+            return {
+                ...state,
+                isLoading: action.value
+            }
         default:
             return state
     }
 }
 
 // actions
-export const setIsForgotten = (value: boolean, email: string) => ({type: 'FORGOT-PASSWORD', value, email} as const)
+export const setIsSuccessAndSetEmail = (value: boolean, email: string) => ({type: 'FORGOT-PASSWORD', value, email} as const)
 export const setError = (err: string) => ({type: 'SET-ERROR', err} as const)
 export const setDisabled = (value: boolean) => ({type: 'SET-DISABLED', value} as const)
+export const setLoading = (value: boolean) => ({type: 'SET-LOADING', value} as const)
 
 // thunks
 export const forgotPassword = (email: string) => (dispatch: Dispatch) => {
@@ -46,14 +53,19 @@ export const forgotPassword = (email: string) => (dispatch: Dispatch) => {
     dispatch(setDisabled(true))
     recoveryAPI.forgot(data)
         .then(res => {
-            dispatch(setIsForgotten(true, email))
+            dispatch(setIsSuccessAndSetEmail(true, email))
         })
         .catch(err => {
             dispatch(setError(err.response.data.error))
         })
+        .finally(() => dispatch(setDisabled(false)))
 }
 
 
 // type
 export type RecoveryInitialStateType = typeof initialState
-export type RecoveryActionType = ReturnType<typeof setIsForgotten> | ReturnType<typeof setError> | ReturnType<typeof setDisabled>
+export type RecoveryActionType =
+    | ReturnType<typeof setIsSuccessAndSetEmail>
+    | ReturnType<typeof setError>
+    | ReturnType<typeof setDisabled>
+    | ReturnType<typeof setLoading>

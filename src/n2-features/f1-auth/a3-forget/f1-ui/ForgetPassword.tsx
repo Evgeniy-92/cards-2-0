@@ -11,7 +11,7 @@ import {AppRootStateType} from "../../../../n1-main/m2-bll/store";
 
 export const ForgetPassword = () => {
     const dispatch = useDispatch()
-    const isForgotten = useSelector<AppRootStateType, boolean>(state => state.recovery.isForgotten)
+    const isSuccess = useSelector<AppRootStateType, boolean>(state => state.recovery.isSuccess)
     const error = useSelector<AppRootStateType, string>(state => state.recovery.error)
     const disabled = useSelector<AppRootStateType, boolean>(state => state.recovery.isDisabledBtn)
     const formik = useFormik({
@@ -33,7 +33,7 @@ export const ForgetPassword = () => {
         },
     })
 
-    if (isForgotten) {
+    if (isSuccess) {
         return <Navigate to={'/check-email'}/>
     }
     return (
