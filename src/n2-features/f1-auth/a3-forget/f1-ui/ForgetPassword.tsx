@@ -1,14 +1,18 @@
 import {useFormik} from "formik";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import SuperInputText
     from "../../../../n1-main/m1-ui/common/c2-SuperInputText/SuperInputText";
 import SuperButton from "../../../../n1-main/m1-ui/common/c1-SuperButton/SuperButton";
 import {forgotPassword} from "../f2-bll/recoveryReducer";
 import {FormikErrorType} from "../f3-dall/recoveryAPI";
+import {Navigate} from "react-router-dom";
+import {AppRootStateType} from "../../../../n1-main/m2-bll/store";
 
 
 export const ForgetPassword = () => {
     const dispatch = useDispatch()
+    const isForgotten = useSelector<AppRootStateType, boolean>(state => state.recovery.isForgotten)
+    const error = useSelector<AppRootStateType, string>(state => state.recovery.error)
     const formik = useFormik({
         initialValues: {
             email: ''
@@ -24,18 +28,26 @@ export const ForgetPassword = () => {
         },
         onSubmit: values => {
             dispatch(forgotPassword(values.email))
-            console.log(values.email)
+            formik.resetForm()
         },
     })
+    if (isForgotten) {
+        return <Navigate to={'/check-email'}/>
+    }
     return (
         <div>
             <h1>Forgot your password?</h1>
             <form onSubmit={formik.handleSubmit}>
-                <SuperInputText
+                <div>
+                    <SuperInputText
                     type='email'
                     {...formik.getFieldProps('email')}
-                />
-                <SuperButton type={'submit'}>Send Instructions</SuperButton>
+                    />
+                    {error}
+                </div>
+                <div>
+                    <SuperButton type={'submit'}>Send Instructions</SuperButton>
+                </div>
             </form>
         </div>
     )

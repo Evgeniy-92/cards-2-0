@@ -1,8 +1,10 @@
 import {Dispatch} from "redux";
-import {ForgotParamsType, recoveryAPI, ResponseForgotType} from "../f3-dall/recoveryAPI";
+import {recoveryAPI} from "../f3-dall/recoveryAPI";
 
 const initialState = {
-    isForgotten: false
+    isForgotten: false,
+    email: '',
+    error: ''
 }
 
 export const recoveryReducer = (state: RecoveryInitialStateType = initialState, action: RecoveryActionType) => {
@@ -11,6 +13,12 @@ export const recoveryReducer = (state: RecoveryInitialStateType = initialState, 
             return {
                 ...state
                 ,isForgotten: action.value
+                ,email: action.email
+            }
+        case "SET-ERROR":
+            return {
+                ...state,
+                error: action.err
             }
         default:
             return state
@@ -18,7 +26,8 @@ export const recoveryReducer = (state: RecoveryInitialStateType = initialState, 
 }
 
 // actions
-export const setIsForgotten = (value: boolean) => ({type: 'FORGOT-PASSWORD', value})
+export const setIsForgotten = (value: boolean, email: string) => ({type: 'FORGOT-PASSWORD', value, email} as const)
+export const setError = (err: string) => ({type: 'SET-ERROR', err} as const)
 
 // thunks
 export const forgotPassword = (email: string) => (dispatch: Dispatch) => {
@@ -29,14 +38,14 @@ export const forgotPassword = (email: string) => (dispatch: Dispatch) => {
     }
     recoveryAPI.forgot(data)
         .then(res => {
-            console.log(res.data)
+            dispatch(setIsForgotten(true, email))
         })
         .catch(err => {
-            console.log(err)
+            dispatch(setError(err.response.data.error))
         })
 }
 
 
 // type
 export type RecoveryInitialStateType = typeof initialState
-export type RecoveryActionType = ReturnType<typeof setIsForgotten>
+export type RecoveryActionType = ReturnType<typeof setIsForgotten> | ReturnType<typeof setError>
