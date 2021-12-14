@@ -9,6 +9,7 @@ import {Registration} from "../../../n2-features/f1-auth/a2-register/Registratio
 import {
     ForgetPassword
 } from "../../../n2-features/f1-auth/a3-forget/f1-ui/ForgetPassword";
+import {CheckEmail} from "../../../n2-features/f1-auth/a3-forget/f1-ui/CheckEmail";
 
 
 
@@ -20,6 +21,7 @@ export const AppRoutes = () => {
                 <Route path='login' element={<Login/>}/>
                 <Route path='register' element={<Registration/>}/>
                 <Route path='recovery' element={<ForgetPassword/>}/>
+                <Route path='check-email' element={<CheckEmail/>}/>
                 <Route path='new-pass/:token' element={<NewPassword/>}/>
                 <Route path='profile' element={<Profile/>}/>
                 <Route path='*' element={<NotFound/>}/>
