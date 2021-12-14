@@ -1,21 +1,34 @@
+import registrationAPI, {RegistrationType} from "./api-registration";
+import {Dispatch} from "redux";
 
-const initialState = {}
+const initialState = {
+    isRegistrate: false
+}
 
 export const registerReducer = (state: RegisterInitialStateType = initialState, action: RegisterActionType) => {
     switch (action.type) {
-        case "NEW":
+        case "REGISTRATION":
             return {
-                ...state
+                ...state, isRegistrate: true
             }
         default:
             return state
     }
 }
 
-// actions
-export const newAC = () => ({type: 'NEW'})
+export const registrateAC = () => ({type: 'REGISTRATION'})
 
+export const registrateTC = (data: RegistrationType) => (dispatch: Dispatch<RegisterActionType>) => {
+
+    registrationAPI.registration(data)
+        .then((res) => {
+            dispatch(registrateAC())
+        })
+        .catch(error => {
+            //console.log(error.error)
+        })
+}
 
 // type
 export type RegisterInitialStateType = typeof initialState
-export type RegisterActionType = ReturnType<typeof newAC>
+export type RegisterActionType = ReturnType<typeof registrateAC>
