@@ -5,7 +5,7 @@ import {FormikProps, useFormik} from "formik";
 import {inLoginTC} from "./loginReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../../n1-main/m2-bll/store";
-import {Navigate} from 'react-router-dom';
+import {Navigate, useNavigate} from 'react-router-dom';
 import SuperCheckbox from "../../../n1-main/m1-ui/common/c3-SuperCheckbox/SuperCheckbox";
 import ContainerAuth from '../../../n1-main/m1-ui/common/c4-containerAuth';
 
@@ -13,6 +13,7 @@ export const Login = () => {
     const dispatch = useDispatch()
     const error = useSelector<AppRootStateType, string>((state) => state.login.error)
     const isLogin = useSelector<AppRootStateType, boolean>((state) => state.login.isLogin)
+    const navigate = useNavigate()
 
     type FormikTypes = {
         email: string
@@ -69,7 +70,7 @@ export const Login = () => {
                             </span>
                         <div className={styles.forgot}>
 
-                            <p>
+                            <p onClick={() => navigate('/recovery')}>
                                 Forgot Password
                             </p>
                         </div>
@@ -80,7 +81,7 @@ export const Login = () => {
                         <span className={styles.notAccount}>
                             Don’t have an account?
                         </span>
-                        <p className={styles.singUp}>
+                        <p className={styles.singUp} onClick={() => navigate('/register')}>
                             Sing Up
                         </p>
                     </div>
