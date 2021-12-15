@@ -13,10 +13,7 @@ import styles from './ForgetPassword.module.scss'
 export const ForgetPassword = () => {
     const dispatch = useDispatch()
     const isSuccess = useSelector<AppRootStateType, boolean>(state => state.recovery.isSuccess)
-    const isLoading = useSelector<AppRootStateType, boolean>(state => state.recovery.isLoading)
     const error = useSelector<AppRootStateType, string>(state => state.recovery.error)
-    const disabled = useSelector<AppRootStateType, boolean>(state => state.recovery.isDisabledBtn)
-
     const navigate = useNavigate()
 
     const formik = useFormik({
@@ -50,7 +47,6 @@ export const ForgetPassword = () => {
                     <h3>Forgot your password?</h3>
                 </div>
 
-                {isLoading && <div>Loading...</div>}
                 <form onSubmit={formik.handleSubmit}>
                     <div className={styles.inputBox}>
                         <label>Email</label>
