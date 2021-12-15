@@ -1,5 +1,6 @@
 import {Dispatch} from "redux";
 import {newPasswordAPI} from "./newPasswordAPI";
+import {setIsLoading} from "../m1-ui/appReducer";
 
 const initialState = {
     error: '',
@@ -29,15 +30,21 @@ export const setSuccess = (value: boolean) => ({type: 'SET-SUCCESS', value} as c
 
 // thunk
 export const setPassword = (token: string, password: string, password2: string) => (dispatch: Dispatch) => {
-    (password !== password2)
-        ? dispatch(setError("Passwords don't match!"))
-        : newPasswordAPI.setNewPassword(password, token)
+    if (password !== password2) {
+        dispatch(setError("Passwords don't match!"))
+    } else {
+        dispatch(setIsLoading('loading'))
+        newPasswordAPI.setNewPassword(password, token)
             .then(res => {
+                dispatch(setIsLoading('idle'))
                 dispatch(setSuccess(true))
             })
             .catch(err => {
+                dispatch(setIsLoading('error'))
                 console.log(err.response.data.error)
             })
+    }
+
 }
 
 // type
