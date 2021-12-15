@@ -5,7 +5,7 @@ import SuperInputText
 import SuperButton from "../../../../n1-main/m1-ui/common/c1-SuperButton/SuperButton";
 import {forgotPassword} from "../f2-bll/recoveryReducer";
 import {FormikErrorRecoveryType} from "../f3-dall/recoveryAPI";
-import {Navigate} from "react-router-dom";
+import {Navigate, useNavigate} from "react-router-dom";
 import {AppRootStateType} from "../../../../n1-main/m2-bll/store";
 import ContainerAuth from "../../../../n1-main/m1-ui/common/c4-containerAuth";
 import styles from './ForgetPassword.module.scss'
@@ -16,6 +16,9 @@ export const ForgetPassword = () => {
     const isLoading = useSelector<AppRootStateType, boolean>(state => state.recovery.isLoading)
     const error = useSelector<AppRootStateType, string>(state => state.recovery.error)
     const disabled = useSelector<AppRootStateType, boolean>(state => state.recovery.isDisabledBtn)
+
+    const navigate = useNavigate()
+
     const formik = useFormik({
         initialValues: {
             email: ''
@@ -66,7 +69,7 @@ export const ForgetPassword = () => {
                             Send Instructions
                         </SuperButton>
                         <span className={styles.remember}>Did you remember your password?</span>
-                        <span className={styles.tryLoggingIn}>Try logging in</span>
+                        <span className={styles.tryLoggingIn} onClick={() => navigate('/login')}>Try logging in</span>
                     </div>
 
                 </form>
