@@ -2,7 +2,9 @@
 
 .registration {
   @include main_content;
-
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 
@@ -95,6 +97,13 @@
 }
 
 .error {
+  font-size: 16px;
+  color: red;
+  font-weight: 600;
+  height: 20px;
+}
+
+.errorValidate{
   font-size: 16px;
   color: red;
   font-weight: 600;

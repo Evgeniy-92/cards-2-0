@@ -18,6 +18,7 @@ type FormikErrorType = {
 
 export const Registration = () => {
     const isRegistrate = useSelector<AppRootStateType, boolean>(state => state.register.isRegistrate)
+    const err = useSelector<AppRootStateType, string>(state => state.register.errorRegist)
     const dispatch = useDispatch()
     const formik = useFormik({
         initialValues: {
@@ -61,6 +62,10 @@ export const Registration = () => {
     return (
         <ContainerAuth>
             <div className={styles.registration}>
+                <div className={styles.intro}>
+                    <h1>It-incubator</h1>
+                    <h3>Registration</h3>
+                </div>
                 <form onSubmit={formik.handleSubmit}>
 
                     <div className={styles.inputs}>
@@ -75,7 +80,7 @@ export const Registration = () => {
                         </div>
                         {
                             formik.touched.email &&
-                            formik.errors.email ? <div style={{color: "red"}}>{formik.errors.email}</div> : null}
+                            formik.errors.email ? <span className={styles.error}>{formik.errors.email}</span> : <span className={styles.error}></span>}
 
                         <div className={styles.inputsBox}>
                             <label className={styles.label}>Password</label>
@@ -88,7 +93,7 @@ export const Registration = () => {
                         </div>
                         {
                             formik.touched.email &&
-                            formik.errors.password ? <div style={{color: "red"}}>{formik.errors.password}</div> : null}
+                            formik.errors.password ? <span className={styles.error}>{formik.errors.password}</span> : <span className={styles.error}></span>}
 
                         <div className={styles.inputsBox}>
                             <label className={styles.label}>Repeat password</label>
@@ -102,7 +107,7 @@ export const Registration = () => {
                         {
                             formik.touched.email &&
                             formik.errors.repeatPassword ?
-                                <div style={{color: "red"}}>{formik.errors.repeatPassword}</div> : null}
+                                <span className={styles.error}>{formik.errors.repeatPassword}</span> : <span className={styles.error}></span>}
 
                         <div className={styles.next}>
                             <SuperButton className={styles.btn}
@@ -110,6 +115,8 @@ export const Registration = () => {
                                 Registration
                             </SuperButton>
                         </div>
+
+                        <span className={styles.error}>{err}</span>
 
                     </div>
 
