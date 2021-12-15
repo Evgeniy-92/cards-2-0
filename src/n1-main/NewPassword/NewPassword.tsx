@@ -1,5 +1,5 @@
 import {useFormik} from "formik";
-import {Link, useParams} from "react-router-dom";
+import {Navigate, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import SuperInputText from "../m1-ui/common/c2-SuperInputText/SuperInputText";
 import SuperButton from "../m1-ui/common/c1-SuperButton/SuperButton";
@@ -7,6 +7,8 @@ import {FormikErrorNewPasswordType} from "./newPasswordAPI";
 import {setPassword} from "./newPassReducer";
 import {AppRootStateType} from "../m2-bll/store";
 import React from "react";
+import ContainerAuth from "../m1-ui/common/c4-containerAuth";
+import styles from './NewPassword.module.scss'
 
 export const NewPassword = () => {
 
@@ -43,18 +45,22 @@ export const NewPassword = () => {
         },
     })
 
+    if (success) {
+        return <Navigate to={'/login'}/>
+    }
 
     return (
-        success
-            ? <div>
-                <div style={{color: 'green', fontSize: '30px'}}>SUCCESS</div>
-                <Link to={'/login'}>Login</Link>
-            </div>
+        <ContainerAuth>
+            <div className={styles.container}>
 
-            : <div>
-                <h1>Create new password?</h1>
+                <div className={styles.intro}>
+                    <h1>It-incubator</h1>
+                    <h3>Create new password?</h3>
+                </div>
+
                 <form onSubmit={formik.handleSubmit}>
-                    <div>
+                    <div className={styles.inputBox}>
+                        <label>New Password</label>
                         <SuperInputText
                             type='password'
                             {...formik.getFieldProps('password')}
@@ -62,9 +68,9 @@ export const NewPassword = () => {
                         {formik.touched.password
                             && formik.errors.password
                             && <div style={{color: 'red'}}>{formik.errors.password}</div>}
-                        {/*<div style={{color: 'red'}}>{error}</div>*/}
                     </div>
-                    <div>
+                    <div className={styles.inputBox}>
+                        <label>Repeat Password</label>
                         <SuperInputText
                             type='password'
                             {...formik.getFieldProps('password2')}
@@ -73,13 +79,18 @@ export const NewPassword = () => {
                             && formik.errors.password2
                             &&
                             <div style={{color: 'red'}}>{formik.errors.password2}</div>}
-                        {/*<div style={{color: 'red'}}>{error}</div>*/}
                     </div>
+
                     <div style={{color: 'red'}}>{error}</div>
-                    <div>
-                        <SuperButton type={'submit'}>Send Instructions</SuperButton>
+
+                    <div className={styles.message}>Create new password and will send you further instructions to email</div>
+
+                    <div className={styles.buttonContainer}>
+                        <SuperButton className={styles.buttonBox} type={'submit'}>Create
+                            new password</SuperButton>
                     </div>
                 </form>
             </div>
+        </ContainerAuth>
     )
 }
