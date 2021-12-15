@@ -25,7 +25,7 @@ export const registrateTC = (data: RegistrationType) => (dispatch: Dispatch<Regi
             dispatch(registrateAC())
         })
         .catch(error => {
-            //console.log(error.error)
+
         })
 }
 
