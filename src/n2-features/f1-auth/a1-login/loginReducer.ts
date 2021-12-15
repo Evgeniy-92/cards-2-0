@@ -1,9 +1,9 @@
 import {inLoginType, loginApi} from "./api";
 import {Dispatch} from "redux";
+import {SetInAuth, setIsLoading} from "../../../n1-main/m1-ui/appReducer";
 
 const initialState = {
-    error: '',
-    isLogin: false,
+    error: ''
 }
 
 export const loginReducer = (state: LoginInitialStateType = initialState, action: ActionType): LoginInitialStateType => {
@@ -12,11 +12,6 @@ export const loginReducer = (state: LoginInitialStateType = initialState, action
             return {
                 ...state, error: action.error
             }
-
-        case 'IS_LOGIN':
-            return {
-                ...state, isLogin: action.isLogin
-            }
         default:
             return state
     }
@@ -24,27 +19,34 @@ export const loginReducer = (state: LoginInitialStateType = initialState, action
 
 // actions
 export const setError = (error: string) => ({type: 'SET_ERROR', error} as const)
-export const setLogin = (isLogin: boolean) => ({type: 'IS_LOGIN', isLogin} as const)
 
 //thunk logout
 export const inLoginTC = (data: inLoginType) => (dispatch: Dispatch) => {
+    dispatch(setIsLoading('loading'))
+
     return loginApi.inLogin(data)
         .then((res) => {
-            dispatch(setLogin(true))
+            dispatch(setIsLoading('idle'))
             dispatch(setError(''))
+            dispatch(SetInAuth(true))
         })
         .catch((err) => {
+            dispatch(setIsLoading('error'))
             dispatch(setError(err.response.data.error))
         })
 }
 
 export const logoutTC = () => (dispatch: Dispatch) => {
-    return loginApi.logout().then(() => dispatch(setLogin(false)))
+    dispatch(setIsLoading('loading'))
+
+    return loginApi.logout().then(() => {
+        dispatch(setIsLoading('idle'))
+        dispatch(SetInAuth(false))
+    })
 }
 // type
 export type LoginInitialStateType = {
     error: string
-    isLogin: boolean
 }
 
-type ActionType = ReturnType<typeof setLogin> | ReturnType<typeof setError>
+type ActionType = ReturnType<typeof setError>

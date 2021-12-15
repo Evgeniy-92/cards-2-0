@@ -12,7 +12,7 @@ import ContainerAuth from '../../../n1-main/m1-ui/common/c4-containerAuth';
 export const Login = () => {
     const dispatch = useDispatch()
     const error = useSelector<AppRootStateType, string>((state) => state.login.error)
-    const isLogin = useSelector<AppRootStateType, boolean>((state) => state.login.isLogin)
+    const inAuth = useSelector<AppRootStateType, boolean>((state) => state.app.inAuth)
     const navigate = useNavigate()
 
     type FormikTypes = {
@@ -33,7 +33,7 @@ export const Login = () => {
         }
     })
 
-    if (isLogin) return <Navigate to={'/profile'}/>
+    if (inAuth) return <Navigate to={'/profile'}/>
 
     return (
         <ContainerAuth>
