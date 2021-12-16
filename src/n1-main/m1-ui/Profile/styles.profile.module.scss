@@ -1,10 +1,13 @@
 @import "src/styles/mixin";
 
-.registration {
+.profile {
   @include main_content;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
+  height: 500px;
+  background-color: rgba(123, 81, 179, 0.41);
+
 }
 
 
@@ -124,3 +127,13 @@
   }
 }
 
+.profileInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.avatar {
+  max-width: 100px;
+  width: 100%;
+}
