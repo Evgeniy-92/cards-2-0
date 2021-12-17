@@ -1,7 +1,6 @@
 import profileAPI, {ProfileType} from "./api-profile";
-import {inAuthTC, setIsLoading} from "../appReducer";
-import { ThunkAction } from "redux-thunk";
-import {AppRootStateType} from "../../m2-bll/store";
+import {setIsLoading} from "../appReducer";
+import {Dispatch} from "redux";
 
 const initialState = {
     name: "user name",
@@ -12,7 +11,7 @@ export const profileReducer = (state: ProfileInitialStateType = initialState, ac
     switch (action.type) {
         case "PROFILE/CHANGE_USER_NAME":
             return {
-                ...state, userName: action.userName
+                ...state, name: action.userName
             }
         default:
             return state
@@ -20,23 +19,17 @@ export const profileReducer = (state: ProfileInitialStateType = initialState, ac
 }
 
 // actions
-const changeUserNameAC = (userName: string) => ({type: 'PROFILE/CHANGE_USER_NAME', userName} as const)
+export const changeUserNameAC = (userName: string) => ({type: 'PROFILE/CHANGE_USER_NAME', userName} as const)
 
-export const changeUserNameTC = (data:ProfileType): ThunkAction<void, AppRootStateType, unknown, ProfileActionType> => (dispatch) => {
+export const changeUserNameTC = (data:ProfileType) => (dispatch: Dispatch) => {
     dispatch(setIsLoading('loading'))
     profileAPI.changeUserName(data)
         .then((res) => {
-            dispatch(changeUserNameAC(data.name))
-            dispatch(inAuthTC())
+            dispatch(changeUserNameAC(res.data.updatedUser.name))
             dispatch(setIsLoading('idle'))
         })
         .catch(error => {
-            /*dispatch(registrateAC(false))
             dispatch(setIsLoading('error'))
-            dispatch(setErrorAC(error.response.data.error))
-            setTimeout(() => {
-                dispatch(setErrorAC(""))
-            }, 6000)*/
         })
 }
 // type

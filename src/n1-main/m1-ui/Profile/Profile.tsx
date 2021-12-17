@@ -9,7 +9,7 @@ import React from "react";
 
 export const Profile = () => {
     const inAuth = useSelector<AppRootStateType, boolean>((state) => state.app.inAuth)
-    const userName = useSelector<AppRootStateType, string>(state => state.app.name)
+    const userName = useSelector<AppRootStateType, string>(state => state.profile.name)
     const avatar = useSelector<AppRootStateType, string>(state => state.profile.avatar)
     const dispatch = useDispatch()
 
