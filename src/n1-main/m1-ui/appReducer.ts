@@ -25,18 +25,28 @@ export const setIsLoading = (isLoading: IsLoadingType) => ({type: 'APP/IS_LOADIN
 export const SetInAuth = (inAuth: boolean) => ({type: 'APP/IN_AUTH', inAuth} as const)
 
 //thunk
-export const inAuthTC = () => (dispatch: Dispatch) => {
+export const inAuthTC = () => async (dispatch: Dispatch) => {
     dispatch(setIsLoading('loading'))
-    return authApi.inAuth()
-        .then((res) => {
-            dispatch(setIsLoading('idle'))
-            dispatch(SetInAuth(true))
-            dispatch(changeUserNameAC(res.data.name))
-        })
-        .catch((err) => {
-            dispatch(setIsLoading('error'))
-            dispatch(SetInAuth(false))
-        })
+    //
+    try {
+        const res = await authApi.inAuth()
+        dispatch(setIsLoading('idle'))
+        dispatch(SetInAuth(true))
+        dispatch(changeUserNameAC(res.data.name))
+    } catch (err) {
+        dispatch(setIsLoading('error'))
+        dispatch(SetInAuth(false))
+    }
+    // return authApi.inAuth()
+    //     .then((res) => {
+    //         dispatch(setIsLoading('idle'))
+    //         dispatch(SetInAuth(true))
+    //         dispatch(changeUserNameAC(res.data.name))
+    //     })
+    //     .catch((err) => {
+    //         dispatch(setIsLoading('error'))
+    //         dispatch(SetInAuth(false))
+    //     })
 }
 
 

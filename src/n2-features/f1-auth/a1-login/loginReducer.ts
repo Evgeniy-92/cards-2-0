@@ -22,30 +22,44 @@ export const loginReducer = (state: LoginInitialStateType = initialState, action
 export const setError = (error: string) => ({type: 'SET_ERROR', error} as const)
 
 //thunk logout
-export const inLoginTC = (data: inLoginType) => (dispatch: Dispatch) => {
+export const inLoginTC = (data: inLoginType) => async (dispatch: Dispatch) => {
     dispatch(setIsLoading('loading'))
 
-    return loginApi.inLogin(data)
-        .then((res) => {
-            dispatch(setIsLoading('idle'))
-            dispatch(setError(''))
-            dispatch(SetInAuth(true))
-            dispatch(changeUserNameAC(res.data.name))
-        })
-        .catch((err) => {
-            dispatch(setIsLoading('error'))
-            dispatch(setError(err.response.data.error))
-        })
+    try {
+        const res = await loginApi.inLogin(data)
+        dispatch(setIsLoading('idle'))
+        dispatch(setError(''))
+        dispatch(SetInAuth(true))
+        dispatch(changeUserNameAC(res.data.name))
+    } catch (err: typeof err) {
+        dispatch(setIsLoading('error'))
+        dispatch(setError(err.response.data.error))
+    }
+    // return loginApi.inLogin(data)
+    //     .then((res) => {
+    //         dispatch(setIsLoading('idle'))
+    //         dispatch(setError(''))
+    //         dispatch(SetInAuth(true))
+    //         dispatch(changeUserNameAC(res.data.name))
+    //     })
+    //     .catch((err) => {
+    //         dispatch(setIsLoading('error'))
+    //         dispatch(setError(err.response.data.error))
+    //     })
 }
 
-export const logoutTC = () => (dispatch: Dispatch) => {
+export const logoutTC = () => async (dispatch: Dispatch) => {
     dispatch(setIsLoading('loading'))
 
-    return loginApi.logout().then(() => {
+    try {
+        await loginApi.logout()
         dispatch(setIsLoading('idle'))
         dispatch(SetInAuth(false))
-    })
+    } catch (err) {
+        dispatch(setIsLoading('error'))
+    }
 }
+
 // type
 export type LoginInitialStateType = {
     error: string
