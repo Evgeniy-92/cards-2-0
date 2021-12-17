@@ -5,7 +5,7 @@ import {changeUserNameAC} from "./Profile/profileReducer";
 const initialState = {
     isLoading: 'idle' as IsLoadingType,
     inAuth: false,
- }
+}
 
 export const appReducer = (state: InitialStateType = initialState, action: ActionType): InitialStateType => {
     switch (action.type) {
@@ -25,9 +25,9 @@ export const setIsLoading = (isLoading: IsLoadingType) => ({type: 'APP/IS_LOADIN
 export const SetInAuth = (inAuth: boolean) => ({type: 'APP/IN_AUTH', inAuth} as const)
 
 //thunk
-export const inAuthTC = (data?: any) => (dispatch: Dispatch) => {
+export const inAuthTC = () => (dispatch: Dispatch) => {
     dispatch(setIsLoading('loading'))
-    return authApi.inAuth(data)
+    return authApi.inAuth()
         .then((res) => {
             dispatch(setIsLoading('idle'))
             dispatch(SetInAuth(true))

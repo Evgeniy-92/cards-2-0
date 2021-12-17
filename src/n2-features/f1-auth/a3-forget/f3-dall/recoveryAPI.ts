@@ -3,13 +3,13 @@ import {serverAPI} from "../../../../n1-main/m1-ui/common/helpers/findServer";
 
 
 const instance = axios.create({
-    baseURL: 'https://neko-back.herokuapp.com/2.0',
+    baseURL: 'https://neko-back.herokuapp.com/2.0/',
     withCredentials: true,
 })
 
 export const recoveryAPI = {
     forgot(data: ForgotParamsType) {
-        return instance.post<ForgotParamsType, AxiosResponse<ResponseForgotType>>('/auth/forgot', data)
+        return instance.post<ForgotParamsType, AxiosResponse<ResponseForgotType>>('auth/forgot', data)
     }
 }
 

@@ -7,21 +7,7 @@ const instance = axios.create({
 })
 
 export const authApi = {
-    inAuth(data?: inLoginType) {
-        return instance.post('auth/me', data)
+    inAuth() {
+        return instance.post('auth/me', {})
     },
-}
-
-export type inLoginType = {
-    _id: string;
-    email: string;
-    name: string;
-    avatar?: string;
-    publicCardPacksCount: number;
-    created: Date;
-    updated: Date;
-    isAdmin: boolean;
-    verified: boolean;
-    rememberMe: boolean;
-    error?: string;
 }
