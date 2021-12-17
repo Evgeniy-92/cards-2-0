@@ -1,10 +1,11 @@
 import {Dispatch} from "redux";
 import {authApi} from "./apiApp";
+import {changeUserNameAC} from "./Profile/profileReducer";
 
 const initialState = {
     isLoading: 'idle' as IsLoadingType,
-    inAuth: false
-}
+    inAuth: false,
+ }
 
 export const appReducer = (state: InitialStateType = initialState, action: ActionType): InitialStateType => {
     switch (action.type) {
@@ -30,6 +31,7 @@ export const inAuthTC = (data?: any) => (dispatch: Dispatch) => {
         .then((res) => {
             dispatch(setIsLoading('idle'))
             dispatch(SetInAuth(true))
+            dispatch(changeUserNameAC(res.data.name))
         })
         .catch((err) => {
             dispatch(setIsLoading('error'))
@@ -37,11 +39,11 @@ export const inAuthTC = (data?: any) => (dispatch: Dispatch) => {
         })
 }
 
+
 //types
 export type IsLoadingType = 'idle' | 'loading' | 'success' | 'error'
 
-type InitialStateType = {
-    isLoading: IsLoadingType
-    inAuth: boolean
-}
-type ActionType = ReturnType<typeof setIsLoading> | ReturnType<typeof SetInAuth>
+type InitialStateType = typeof initialState
+type ActionType = ReturnType<typeof setIsLoading>
+    | ReturnType<typeof SetInAuth>
+    | ReturnType<typeof changeUserNameAC>

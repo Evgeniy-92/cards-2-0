@@ -1,11 +1,17 @@
+import profileAPI, {ProfileType} from "./api-profile";
+import {setIsLoading} from "../appReducer";
+import {Dispatch} from "redux";
 
-const initialState = {}
+const initialState = {
+    name: "user name",
+    avatar: "https://cdn-icons-png.flaticon.com/512/4530/4530930.png"
+}
 
 export const profileReducer = (state: ProfileInitialStateType = initialState, action: ProfileActionType) => {
     switch (action.type) {
-        case "NEW":
+        case "PROFILE/CHANGE_USER_NAME":
             return {
-                ...state
+                ...state, name: action.userName
             }
         default:
             return state
@@ -13,9 +19,21 @@ export const profileReducer = (state: ProfileInitialStateType = initialState, ac
 }
 
 // actions
-export const newAC = () => ({type: 'NEW'})
+export const changeUserNameAC = (userName: string) => ({type: 'PROFILE/CHANGE_USER_NAME', userName} as const)
 
-
+export const changeUserNameTC = (data:ProfileType) => (dispatch: Dispatch) => {
+    dispatch(setIsLoading('loading'))
+    profileAPI.changeUserName(data)
+        .then((res) => {
+            dispatch(changeUserNameAC(res.data.updatedUser.name))
+            dispatch(setIsLoading('idle'))
+        })
+        .catch(error => {
+            dispatch(setIsLoading('error'))
+        })
+}
 // type
-export type ProfileInitialStateType = typeof initialState
-export type ProfileActionType = ReturnType<typeof newAC>
+type ProfileInitialStateType = typeof initialState
+
+type ChangeUserNameActionType = ReturnType<typeof changeUserNameAC>
+type ProfileActionType = ChangeUserNameActionType | ReturnType<typeof setIsLoading>
