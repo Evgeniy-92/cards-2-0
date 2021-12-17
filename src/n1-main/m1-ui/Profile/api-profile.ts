@@ -1,15 +1,15 @@
 import axios from 'axios';
+import {serverAPI} from "../common/helpers/findServer";
 
 const instance = {
-    baseURL:
-        "http://localhost:7542/2.0/",
+    baseURL: serverAPI,
     withCredentials: true
 };
 
 const axiosInstance = axios.create(instance);
 
 export const profileAPI = {
-    changeUserName: (data:ProfileType) => {
+    changeUserName: (data: ProfileType) => {
         return axiosInstance.put("auth/me", data)
     },
 };
