@@ -1,8 +1,8 @@
 import axios from 'axios';
+import {serverAPI} from "../../../n1-main/m1-ui/common/helpers/findServer";
 
 const instance = {
-    baseURL:
-        "http://localhost:7542/2.0/",
+    baseURL: serverAPI,
 };
 
 const axiosInstance = axios.create(instance);

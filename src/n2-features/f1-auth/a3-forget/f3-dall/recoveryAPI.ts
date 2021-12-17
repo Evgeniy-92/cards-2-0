@@ -1,8 +1,9 @@
 import axios, {AxiosResponse} from 'axios'
+import {serverAPI} from "../../../../n1-main/m1-ui/common/helpers/findServer";
 
 
 const instance = axios.create({
-    baseURL: 'https://neko-back.herokuapp.com/2.0',
+    baseURL: serverAPI,
     withCredentials: true,
 })
 
