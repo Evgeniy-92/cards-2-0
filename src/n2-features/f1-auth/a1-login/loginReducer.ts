@@ -1,6 +1,7 @@
 import {inLoginType, loginApi} from "./api";
 import {Dispatch} from "redux";
 import {SetInAuth, setIsLoading} from "../../../n1-main/m1-ui/appReducer";
+import {changeUserNameAC} from "../../../n1-main/m1-ui/Profile/profileReducer";
 
 const initialState = {
     error: ''
@@ -29,6 +30,7 @@ export const inLoginTC = (data: inLoginType) => (dispatch: Dispatch) => {
             dispatch(setIsLoading('idle'))
             dispatch(setError(''))
             dispatch(SetInAuth(true))
+            dispatch(changeUserNameAC(res.data.name))
         })
         .catch((err) => {
             dispatch(setIsLoading('error'))
