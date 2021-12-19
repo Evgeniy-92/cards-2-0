@@ -4,7 +4,8 @@ import {SetInAuth, setIsLoading} from "../../../n1-main/m1-ui/appReducer";
 import {changeUserNameAC} from "../../../n1-main/m1-ui/Profile/profileReducer";
 
 const initialState = {
-    error: ''
+    error: '',
+    profileData: {}
 }
 
 export const loginReducer = (state: LoginInitialStateType = initialState, action: ActionType): LoginInitialStateType => {
@@ -12,6 +13,10 @@ export const loginReducer = (state: LoginInitialStateType = initialState, action
         case "SET_ERROR":
             return {
                 ...state, error: action.error
+            }
+        case "SET_PROFILE_DATA":
+            return {
+                ...state, profileData: {...action.data}
             }
 
         default:
@@ -21,6 +26,7 @@ export const loginReducer = (state: LoginInitialStateType = initialState, action
 
 // actions
 export const setError = (error: string) => ({type: 'SET_ERROR', error} as const)
+export const setProfileData = (data: profileData) => ({type: 'SET_PROFILE_DATA', data} as const)
 
 //thunk logout
 export const inLoginTC = (data: inLoginType) => async (dispatch: Dispatch) => {
@@ -32,6 +38,7 @@ export const inLoginTC = (data: inLoginType) => async (dispatch: Dispatch) => {
         dispatch(setError(''))
         dispatch(SetInAuth(true))
         dispatch(changeUserNameAC(res.data.name))
+        dispatch(setProfileData(res.data))
     } catch (err: typeof err) {
         dispatch(setIsLoading('error'))
         dispatch(setError(err.response.data.error))
@@ -45,6 +52,7 @@ export const logoutTC = () => async (dispatch: Dispatch) => {
         await loginApi.logout()
         dispatch(setIsLoading('idle'))
         dispatch(SetInAuth(false))
+        dispatch(setProfileData(initialState.profileData))
     } catch (err) {
         dispatch(setIsLoading('error'))
     }
@@ -53,6 +61,21 @@ export const logoutTC = () => async (dispatch: Dispatch) => {
 // type
 export type LoginInitialStateType = {
     error: string
+    profileData: ProfileDataType
 }
 
-type ActionType = ReturnType<typeof setError>
+type ActionType = ReturnType<typeof setError> | ReturnType<typeof setProfileData>
+
+export type ProfileDataType = {
+    _id: string;
+    email: string;
+    name: string;
+    avatar?: string;
+    publicCardPacksCount: number;
+    created: Date;
+    updated: Date;
+    isAdmin: boolean;
+    verified: boolean;
+    rememberMe: boolean;
+    error?: string;
+}
