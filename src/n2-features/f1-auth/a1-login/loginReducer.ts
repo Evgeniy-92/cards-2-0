@@ -13,6 +13,7 @@ export const loginReducer = (state: LoginInitialStateType = initialState, action
             return {
                 ...state, error: action.error
             }
+
         default:
             return state
     }
@@ -35,17 +36,6 @@ export const inLoginTC = (data: inLoginType) => async (dispatch: Dispatch) => {
         dispatch(setIsLoading('error'))
         dispatch(setError(err.response.data.error))
     }
-    // return loginApi.inLogin(data)
-    //     .then((res) => {
-    //         dispatch(setIsLoading('idle'))
-    //         dispatch(setError(''))
-    //         dispatch(SetInAuth(true))
-    //         dispatch(changeUserNameAC(res.data.name))
-    //     })
-    //     .catch((err) => {
-    //         dispatch(setIsLoading('error'))
-    //         dispatch(setError(err.response.data.error))
-    //     })
 }
 
 export const logoutTC = () => async (dispatch: Dispatch) => {

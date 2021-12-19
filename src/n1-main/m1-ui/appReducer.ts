@@ -27,7 +27,7 @@ export const SetInAuth = (inAuth: boolean) => ({type: 'APP/IN_AUTH', inAuth} as 
 //thunk
 export const inAuthTC = () => async (dispatch: Dispatch) => {
     dispatch(setIsLoading('loading'))
-    //
+
     try {
         const res = await authApi.inAuth()
         dispatch(setIsLoading('idle'))
@@ -37,16 +37,6 @@ export const inAuthTC = () => async (dispatch: Dispatch) => {
         dispatch(setIsLoading('error'))
         dispatch(SetInAuth(false))
     }
-    // return authApi.inAuth()
-    //     .then((res) => {
-    //         dispatch(setIsLoading('idle'))
-    //         dispatch(SetInAuth(true))
-    //         dispatch(changeUserNameAC(res.data.name))
-    //     })
-    //     .catch((err) => {
-    //         dispatch(setIsLoading('error'))
-    //         dispatch(SetInAuth(false))
-    //     })
 }
 
 
