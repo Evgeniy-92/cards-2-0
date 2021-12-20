@@ -3,11 +3,12 @@ import styles from './styles.module.scss'
 
 export interface LayoutProps {
     children: React.ReactNode
+    className?: string
 }
 
 const ContainerAuth = (props: LayoutProps) => {
     return (
-        <div className={styles.loginMain}>
+        <div className={`${props.className} ${styles.loginMain}`}>
             {props.children}
         </div>
     );
