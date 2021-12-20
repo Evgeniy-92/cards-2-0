@@ -4,7 +4,7 @@ import {changeUserNameAC} from "./Profile/profileReducer";
 import {setProfileData} from "../../n2-features/f1-auth/a1-login/loginReducer";
 
 const initialState = {
-    isLoading: 'idle' as IsLoadingType,
+    isLoading: 'loading' as IsLoadingType,
     inAuth: false,
 }
 
@@ -31,13 +31,13 @@ export const inAuthTC = () => async (dispatch: Dispatch) => {
 
     try {
         const res = await authApi.inAuth()
-        dispatch(setIsLoading('idle'))
         dispatch(SetInAuth(true))
         dispatch(changeUserNameAC(res.data.name))
         dispatch(setProfileData(res.data))
+        dispatch(setIsLoading('idle'))
     } catch (err) {
-        dispatch(setIsLoading('error'))
         dispatch(SetInAuth(false))
+        dispatch(setIsLoading('error'))
     }
 }
 

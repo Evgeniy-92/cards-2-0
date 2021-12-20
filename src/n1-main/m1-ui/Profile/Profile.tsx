@@ -10,7 +10,7 @@ import {getCardsPack} from "./profileReducer";
 
 export const Profile = () => {
     const dispatch = useDispatch()
-    useEffect(() => {
+   useEffect(() => {
         dispatch(getCardsPack())
     }, [dispatch])
 
