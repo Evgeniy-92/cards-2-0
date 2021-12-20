@@ -5,7 +5,7 @@ import {changeUserNameAC} from "../../../n1-main/m1-ui/Profile/profileReducer";
 
 const initialState = {
     error: '',
-    profileData: {}
+    profileData: {} as ProfileDataType
 }
 
 export const loginReducer = (state: LoginInitialStateType = initialState, action: ActionType): LoginInitialStateType => {
@@ -26,7 +26,7 @@ export const loginReducer = (state: LoginInitialStateType = initialState, action
 
 // actions
 export const setError = (error: string) => ({type: 'SET_ERROR', error} as const)
-export const setProfileData = (data: profileData) => ({type: 'SET_PROFILE_DATA', data} as const)
+export const setProfileData = (data: ProfileDataType) => ({type: 'SET_PROFILE_DATA', data} as const)
 
 //thunk logout
 export const inLoginTC = (data: inLoginType) => async (dispatch: Dispatch) => {
@@ -39,7 +39,7 @@ export const inLoginTC = (data: inLoginType) => async (dispatch: Dispatch) => {
         dispatch(SetInAuth(true))
         dispatch(changeUserNameAC(res.data.name))
         dispatch(setProfileData(res.data))
-    } catch (err: typeof err) {
+    } catch (err: any) {
         dispatch(setIsLoading('error'))
         dispatch(setError(err.response.data.error))
     }

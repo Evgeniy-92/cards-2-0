@@ -5,10 +5,10 @@ import {Dispatch} from "redux";
 const initialState = {
     name: "user name",
     avatar: "https://cdn-icons-png.flaticon.com/512/4530/4530930.png",
-    cards: []
+    cards: [] as CardType[]
 }
 
-export const profileReducer = (state: ProfileInitialStateType = initialState, action: ProfileActionType) => {
+export const profileReducer = (state: ProfileInitialStateType = initialState, action: ProfileActionType):ProfileInitialStateType  => {
     switch (action.type) {
         case "PROFILE/CHANGE_USER_NAME":
             return {
