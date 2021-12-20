@@ -1,7 +1,72 @@
 .table {
-  //max-width: 1000px;
+  max-width: 1000px;
   width: 100%;
   box-shadow: 0 4px 14px rgba(45, 46, 70, 0.15);
-  height: 500px;
-  //border: .1px solid;
+  //height: 500px;
+}
+
+.thead {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  background: #ECECF9;
+
+}
+
+.column {
+  width: 180px;
+  text-align: left;
+}
+
+.tableHeader {
+  height: 50px;
+  display: flex;
+  padding: 10px;
+  align-items: center;
+}
+
+.rows {
+  width: 100%;
+}
+
+.rowe {
+  background: #ECECF9;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+
+  &:nth-child(odd) {
+    background: #fff;
+  }
+}
+
+.rowItem {
+  max-width: 180px;
+  width: 100%;
+}
+
+.row {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.btnBox {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn {
+  padding: 5px 7px;
+  color: #21268F;
+  border-radius: 2px;
+  background: #D7D8EF;
+  cursor: pointer;
+
+  &:nth-child(1) {
+    background: #F1453D;
+    border-radius: 2px;
+    color: #fff;
+  }
 }

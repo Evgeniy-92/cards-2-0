@@ -12,13 +12,10 @@ export const Profile = () => {
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(getCardsPack())
-    }, [])
+    }, [dispatch])
 
     const inAuth = useSelector<AppRootStateType, boolean>((state) => state.app.inAuth)
-    // @ts-ignore
-    const cards = useSelector<AppRootStateType, boolean>((state) => state.profile.cards)
     if (!inAuth) return <Navigate to={'/login'}/>
-    console.log(cards)
 
     return (
         <ContainerAuth>
