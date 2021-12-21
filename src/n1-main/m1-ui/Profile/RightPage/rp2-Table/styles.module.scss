@@ -90,7 +90,7 @@
   display: flex;
   align-items: center;
   padding: 10px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 
   &:nth-child(odd) {
     background: #fff;
@@ -101,15 +101,17 @@
   max-width: 180px;
   width: 100%;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
   overflow-y: hidden;
+
 }
 
 .row {
   display: flex;
   width: 100%;
   justify-content: space-between;
+  height: 40px;
 }
 
 .btnBox {

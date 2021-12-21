@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './styles.module.scss'
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../../../m2-bll/store";
@@ -11,6 +11,26 @@ const Table = () => {
     const sortCards = useSelector<AppRootStateType, number>((state) => state.profile.sortByCards)
     const profileID = useSelector<AppRootStateType, string>((state) => state.login.profileData._id)
     const [nameHeader, setNameHeader] = useState('')
+
+    useEffect(() => {
+        const scrollContainer = document.querySelectorAll("#table");
+
+        scrollContainer.forEach((el) => {
+            el.addEventListener("wheel", (evt: any) => {
+                evt.preventDefault();
+                el.scrollLeft += evt.deltaY;
+            });
+        })
+        return () => {
+            scrollContainer.forEach((el) => {
+                el.removeEventListener("wheel", (evt: any) => {
+                    evt.preventDefault();
+                    el.scrollLeft += evt.deltaY;
+                });
+            })
+        }
+    });
+
     const dispatch = useDispatch()
 
     const changeSortCards = (name: string) => {
@@ -49,10 +69,10 @@ const Table = () => {
                     <tr className={styles.rowe} key={row._id}>
                         <td className={styles.row}>
 
-                            <span className={styles.rowItem}>{row.name}</span>
-                            <span className={styles.rowItem}>{row.cardsCount}</span>
-                            <span className={styles.rowItem}>{row.updated.slice(0, 10)}</span>
-                            <span className={styles.rowItem}> {row.user_name}</span>
+                            <span className={styles.rowItem} id={'table'}>{row.name}</span>
+                            <span className={styles.rowItem} id={'table'}>{row.cardsCount}</span>
+                            <span className={styles.rowItem} id={'table'}>{row.updated.slice(0, 10)}</span>
+                            <span className={styles.rowItem} id={'table'}> {row.user_name}</span>
 
                             <div className={`${styles.rowItem} ${styles.btnBox}`}>
                                 {profileID === row.user_id &&
