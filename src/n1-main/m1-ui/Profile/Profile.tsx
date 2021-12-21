@@ -12,10 +12,12 @@ export const Profile = () => {
     const dispatch = useDispatch()
     const sortCards = useSelector<AppRootStateType, number>((state) => state.profile.sortByCards)
     const sortName = useSelector<AppRootStateType, string>((state) => state.profile.sortName)
+    const minValue = useSelector<AppRootStateType, number>(state => state.profile.min)
+    const maxValue = useSelector<AppRootStateType, number>(state => state.profile.max)
 
     useEffect(() => {
-        dispatch(getCardsPack(sortCards, sortName))
-    }, [dispatch, sortCards, sortName])
+        dispatch(getCardsPack(sortCards, sortName, minValue, maxValue))
+    }, [dispatch, sortCards, sortName, minValue, maxValue])
 
     const inAuth = useSelector<AppRootStateType, boolean>((state) => state.app.inAuth)
     if (!inAuth) return <Navigate to={'/login'}/>

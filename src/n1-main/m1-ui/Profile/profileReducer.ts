@@ -8,7 +8,8 @@ const initialState = {
     cards: null as (null | GetCardsType),
     sortName: 'updated',
     sortByCards: 0 as (0 | 1),
-
+    min: 0,
+    max: 30,
 }
 
 export const profileReducer = (state: ProfileInitialStateType = initialState, action: ProfileActionType): ProfileInitialStateType => {
@@ -25,6 +26,10 @@ export const profileReducer = (state: ProfileInitialStateType = initialState, ac
             return {
                 ...state, sortByCards: action.sort, sortName: action.sortName
             }
+        case "PROFILE/SET_CARDS_NUMBER":
+            return {
+                ...state, min: action.min, max: action.max
+            }
         default:
             return state
     }
@@ -38,6 +43,7 @@ export const setChangeSortCards = (sort: 0 | 1, sortName: string) => ({
     sort,
     sortName
 } as const)
+export const setChangeSortCardsNumber = (min: number, max: number) => ({type: 'PROFILE/SET_CARDS_NUMBER', min, max} as const)
 
 //thunk
 export const changeUserNameTC = (data: ProfileType) => (dispatch: Dispatch) => {
@@ -52,12 +58,12 @@ export const changeUserNameTC = (data: ProfileType) => (dispatch: Dispatch) => {
         })
 }
 
-export const getCardsPack = (sortCards: number, sortName: string) => async (dispatch: Dispatch) => {
+export const getCardsPack = (sortCards: number, sortName: string, min: number, max: number) => async (dispatch: Dispatch) => {
     dispatch(setIsLoading('loading'))
 
     try {
         dispatch(setIsLoading('idle'))
-        const res = await profileAPI.getCards({pageCount: 8, sortPacks: sortCards + sortName})
+        const res = await profileAPI.getCards({pageCount: 8, sortPacks: sortCards + sortName, min, max})
         dispatch(setCards(res.data))
     } catch (e) {
         dispatch(setIsLoading('error'))
@@ -99,3 +105,4 @@ type ProfileActionType =
     | ReturnType<typeof setIsLoading>
     | ReturnType<typeof setCards>
     | ReturnType<typeof setChangeSortCards>
+    |ReturnType<typeof setChangeSortCardsNumber>
