@@ -55,4 +55,15 @@ img {
 body {
   background: linear-gradient(180deg, #E6D4DE 0%, #9890C7 100%);
   min-height: 100vh;
+
+  ::-webkit-scrollbar {
+    height: 5px;
+    width: 4px;
+    background: #ECECF9;
+  }
+
+  ::-webkit-scrollbar-thumb:horizontal {
+    background: #8865c0;
+    border-radius: 20px;
+  }
 }

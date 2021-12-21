@@ -21,7 +21,7 @@ export type getParamsType = {
     packName?: string,
     min?: number,
     max?: number,
-    sortPacks?: number,
+    sortPacks?: number | string,
     page?: number,
     pageCount?: number,
 }

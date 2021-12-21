@@ -1,22 +1,40 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styles from './styles.module.scss'
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../../../m2-bll/store";
-import {CardType} from "../../profileReducer";
+import {CardType, GetCardsType, setChangeSortCards} from "../../profileReducer";
 
 const header = ['Name', 'Cards', 'Last Update', 'Created by', 'Actions']
 
 const Table = () => {
-    // @ts-ignore
-    const rows = useSelector<AppRootStateType, CardType[]>((state) => state.profile.cards)
-    console.log(rows)
+    const rows = useSelector<AppRootStateType, GetCardsType | null>((state) => state.profile.cards)
+    const sortCards = useSelector<AppRootStateType, number>((state) => state.profile.sortByCards)
+    const profileID = useSelector<AppRootStateType, string>((state) => state.login.profileData._id)
+    const [nameHeader, setNameHeader] = useState('')
+    const dispatch = useDispatch()
+
+    const changeSortCards = (name: string) => {
+        const nameClick = name === 'Cards' ? 'cardsCount' : 'updated'
+        if (name === 'Cards' || name === 'Last Update') {
+            if (sortCards === 0) {
+                dispatch(setChangeSortCards(1, nameClick))
+            } else {
+                dispatch(setChangeSortCards(0, nameClick))
+            }
+        }
+        setNameHeader(name)
+    }
+
+    const changeStyleSortCard = ((nameHeader === 'Cards' && sortCards !== 0) && styles.activeCards) || ((nameHeader === 'Last Update' && sortCards !== 0) && styles.activeUpdate)
 
     return (
         <table className={styles.table}>
-
             <thead className={styles.thead}>
+
             {header.map(headerGroup => (
-                <tr className={styles.tableHeader} key={headerGroup}>
+                <tr className={`${styles.tableHeader} ${changeStyleSortCard}`}
+                    key={headerGroup}
+                    onClick={() => changeSortCards(headerGroup)}>
                     <th className={styles.column}>
                         {headerGroup}
                     </th>
@@ -25,27 +43,33 @@ const Table = () => {
             </thead>
 
             <tbody className={styles.rows}>
-            {rows.map(row => {
+
+            {rows?.cardPacks.map((row: CardType) => {
                 return (
                     <tr className={styles.rowe} key={row._id}>
-                        <td
-                            className={styles.row}
-                        >
+                        <td className={styles.row}>
+
                             <span className={styles.rowItem}>{row.name}</span>
                             <span className={styles.rowItem}>{row.cardsCount}</span>
                             <span className={styles.rowItem}>{row.updated.slice(0, 10)}</span>
                             <span className={styles.rowItem}> {row.user_name}</span>
+
                             <div className={`${styles.rowItem} ${styles.btnBox}`}>
-                                <span className={styles.btn}>Delete</span>
-                                <span className={styles.btn}>Edit</span>
+                                {profileID === row.user_id &&
+                                (<>
+                                    <span className={styles.btn} data-color>Delete</span>
+                                    <span className={styles.btn}>Edit</span>
+                                </>)
+                                }
                                 <span className={styles.btn}>Learn</span>
                             </div>
+
                         </td>
                     </tr>
                 )
             })}
-            </tbody>
 
+            </tbody>
         </table>
     );
 };

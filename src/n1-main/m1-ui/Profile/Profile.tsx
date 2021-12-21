@@ -10,9 +10,12 @@ import {getCardsPack} from "./profileReducer";
 
 export const Profile = () => {
     const dispatch = useDispatch()
-   useEffect(() => {
-        dispatch(getCardsPack())
-    }, [dispatch])
+    const sortCards = useSelector<AppRootStateType, number>((state) => state.profile.sortByCards)
+    const sortName = useSelector<AppRootStateType, string>((state) => state.profile.sortName)
+
+    useEffect(() => {
+        dispatch(getCardsPack(sortCards, sortName))
+    }, [dispatch, sortCards, sortName])
 
     const inAuth = useSelector<AppRootStateType, boolean>((state) => state.app.inAuth)
     if (!inAuth) return <Navigate to={'/login'}/>
