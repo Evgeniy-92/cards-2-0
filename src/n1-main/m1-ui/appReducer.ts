@@ -28,7 +28,6 @@ export const SetInAuth = (inAuth: boolean) => ({type: 'APP/IN_AUTH', inAuth} as 
 //thunk
 export const inAuthTC = () => async (dispatch: Dispatch) => {
     dispatch(setIsLoading('loading'))
-
     try {
         const res = await authApi.inAuth()
         dispatch(SetInAuth(true))

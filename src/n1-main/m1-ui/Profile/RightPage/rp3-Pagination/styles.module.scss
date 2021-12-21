@@ -1,4 +1,16 @@
 .pagination {
-  border: .1px solid;
-  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 490px;
 }
+
+.formControl {
+  width: 50px;
+}
+.rowsPerPage {
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+}
+

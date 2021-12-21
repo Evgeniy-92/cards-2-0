@@ -1,6 +1,7 @@
 import profileAPI, {ProfileType} from "./api-profile";
 import {setIsLoading} from "../appReducer";
 import {Dispatch} from "redux";
+import {AppRootStateType} from "../../m2-bll/store";
 
 const initialState = {
     name: "user name",
@@ -8,7 +9,10 @@ const initialState = {
     cards: null as (null | GetCardsType),
     sortName: 'updated',
     sortByCards: 0 as (0 | 1),
-
+    packName: "",
+    newCard: {},
+    page: 1,
+    rowsPerPage: 8
 }
 
 export const profileReducer = (state: ProfileInitialStateType = initialState, action: ProfileActionType): ProfileInitialStateType => {
@@ -25,6 +29,20 @@ export const profileReducer = (state: ProfileInitialStateType = initialState, ac
             return {
                 ...state, sortByCards: action.sort, sortName: action.sortName
             }
+        case "PROFILE/CHANGE-PACK-NAME":
+            return {
+                ...state, packName: action.value
+            }
+        case "PROFILE/SET-PAGE":
+            return {
+                ...state,
+                page: action.newPage
+            }
+        case "PROFILE/SET-ROWS-PER-PAGE":
+            return {
+                ...state,
+                rowsPerPage: action.value
+            }
         default:
             return state
     }
@@ -38,6 +56,11 @@ export const setChangeSortCards = (sort: 0 | 1, sortName: string) => ({
     sort,
     sortName
 } as const)
+export const changePackName = (value: string) => ({type: 'PROFILE/CHANGE-PACK-NAME', value} as const)
+export const addPack = (newPack: CardType) => ({type: 'PROFILE/ADD-PACK', newPack} as const)
+export const setPage = (newPage: number) => ({type: 'PROFILE/SET-PAGE', newPage} as const)
+export const setRowsPerPage = (value: number) => ({type: 'PROFILE/SET-ROWS-PER-PAGE', value} as const)
+
 
 //thunk
 export const changeUserNameTC = (data: ProfileType) => (dispatch: Dispatch) => {
@@ -52,14 +75,29 @@ export const changeUserNameTC = (data: ProfileType) => (dispatch: Dispatch) => {
         })
 }
 
-export const getCardsPack = (sortCards: number, sortName: string) => async (dispatch: Dispatch) => {
+export const getCardsPack = (sortCards: number, sortName: string) => async (dispatch: Dispatch, getState: () => AppRootStateType) => {
+    const state = getState()
+    const packName = state.profile.packName
+    const page = state.profile.page
+    const pageCount = state.profile.rowsPerPage
     dispatch(setIsLoading('loading'))
 
     try {
         dispatch(setIsLoading('idle'))
-        const res = await profileAPI.getCards({pageCount: 8, sortPacks: sortCards + sortName})
+        const res = await profileAPI.getCards({pageCount, page, packName, sortPacks: sortCards + sortName})
         dispatch(setCards(res.data))
+        console.log(res.data)
     } catch (e) {
+        dispatch(setIsLoading('error'))
+    }
+}
+
+export const addCardPack = () => async (dispatch: Dispatch) => {
+    dispatch(setIsLoading('loading'))
+    try {
+        const res = await profileAPI.addNewPack({cardsPack: {}})
+        dispatch(setIsLoading('idle'))
+    }catch (e) {
         dispatch(setIsLoading('error'))
     }
 }
@@ -99,3 +137,7 @@ type ProfileActionType =
     | ReturnType<typeof setIsLoading>
     | ReturnType<typeof setCards>
     | ReturnType<typeof setChangeSortCards>
+    | ReturnType<typeof changePackName>
+    | ReturnType<typeof addPack>
+    | ReturnType<typeof setPage>
+    | ReturnType<typeof setRowsPerPage>

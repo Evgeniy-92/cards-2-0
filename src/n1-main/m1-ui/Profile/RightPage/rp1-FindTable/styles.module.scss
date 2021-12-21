@@ -1,5 +1,27 @@
+@import "src/styles/mixin";
+
 .findTable {
   width: 100%;
-  border: .1px solid;
-  height: 100px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.findInput {
+  width: 70%;
+}
+
+.btn{
+  @include button_styles;
+  max-width: 230px;
+  height: 40px;
+}
+
+h1 {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 26px;
+  line-height: 39px;
+  color: #2D2E46;
+  margin: 6px 0;
 }
