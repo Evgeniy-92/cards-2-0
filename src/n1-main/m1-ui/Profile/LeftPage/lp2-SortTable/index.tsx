@@ -24,7 +24,7 @@ const SortTable = () => {
                     value={values}
                     onHandleChange={handleChange}
                     onHandleChangeCommitted={onHandleChangeCommitted}
-                    min={1}
+                    min={0}
                     max={100}
                     step={1}
                 />
