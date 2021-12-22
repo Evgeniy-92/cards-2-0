@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import styles from './styles.module.scss'
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../../../m2-bll/store";
-import {CardType, GetCardsType, setChangeSortCards} from "../../profileReducer";
+import {CardType, deleteCardPackTC, GetCardsType, setChangeSortCards} from "../../profileReducer";
 
 const header = ['Name', 'Cards', 'Last Update', 'Created by', 'Actions']
 
@@ -47,6 +47,8 @@ const Table = () => {
 
     const changeStyleSortCard = ((nameHeader === 'Cards' && sortCards !== 0) && styles.activeCards) || ((nameHeader === 'Last Update' && sortCards !== 0) && styles.activeUpdate)
 
+    const deleteCardPack = (id: string) => dispatch(deleteCardPackTC(id))
+
     return (
         <table className={styles.table}>
             <thead className={styles.thead}>
@@ -77,7 +79,8 @@ const Table = () => {
                             <div className={`${styles.rowItem} ${styles.btnBox}`}>
                                 {profileID === row.user_id &&
                                 (<>
-                                    <span className={styles.btn} data-color>Delete</span>
+                                    <span className={styles.btn} data-color
+                                          onClick={deleteCardPack.bind(null, row._id)}>Delete</span>
                                     <span className={styles.btn}>Edit</span>
                                 </>)
                                 }

@@ -6,7 +6,7 @@ import styles from './../styles.module.scss'
 
 const SortTable = () => {
     const dispatch = useDispatch()
-    let [values, setValues] = useState<number[]>([0, 100])
+    let [values, setValues] = useState<number[]>([0, 110])
 
     const handleChange = (newValue: number[]) => {
         setValues(newValue)
@@ -24,8 +24,8 @@ const SortTable = () => {
                     value={values}
                     onHandleChange={handleChange}
                     onHandleChangeCommitted={onHandleChangeCommitted}
-                    min={1}
-                    max={100}
+                    min={0}
+                    max={110}
                     step={1}
                 />
             </span>

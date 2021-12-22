@@ -17,6 +17,9 @@ export const profileAPI = {
     },
     addNewPack: (data: getParamsNewPackType) => {
         return axiosInstance.post("/cards/pack", data)
+    },
+    deleteCardPack: (id: string) => {
+        return axiosInstance.delete(`cards/pack?id=${id}`)
     }
 };
 

@@ -72,7 +72,11 @@ export const addPack = (newPack: CardType) => ({type: 'PROFILE/ADD-PACK', newPac
 export const setPage = (newPage: number) => ({type: 'PROFILE/SET-PAGE', newPage} as const)
 export const setRowsPerPage = (value: number) => ({type: 'PROFILE/SET-ROWS-PER-PAGE', value} as const)
 
-export const setChangeCardsNumber = (min: number, max: number) => ({type: 'PROFILE/SET_CARDS_NUMBER', min, max} as const)
+export const setChangeCardsNumber = (min: number, max: number) => ({
+    type: 'PROFILE/SET_CARDS_NUMBER',
+    min,
+    max
+} as const)
 export const setChangeSortCardsById = (user_id: string) => ({type: 'PROFILE/SET_CARDS_BY_ID', user_id} as const)
 
 //thunk
@@ -97,7 +101,15 @@ export const getCardsPack = (sortCards: number, sortName: string, min: number, m
 
     try {
         dispatch(setIsLoading('idle'))
-        const res = await profileAPI.getCards({pageCount, page, packName, sortPacks: sortCards + sortName, min, max, user_id})
+        const res = await profileAPI.getCards({
+            pageCount,
+            page,
+            packName,
+            sortPacks: sortCards + sortName,
+            min,
+            max,
+            user_id
+        })
         dispatch(setCards(res.data))
     } catch (e) {
         dispatch(setIsLoading('error'))
@@ -108,7 +120,17 @@ export const addCardPack = () => async (dispatch: Dispatch) => {
     try {
         const res = await profileAPI.addNewPack({cardsPack: {}})
         dispatch(setIsLoading('idle'))
-    }catch (e) {
+    } catch (e) {
+        dispatch(setIsLoading('error'))
+    }
+}
+export const deleteCardPackTC = (id: string) => async (dispatch: Dispatch) => {
+    dispatch(setIsLoading('loading'))
+
+    try {
+        const res = await profileAPI.deleteCardPack(id)
+        dispatch(setIsLoading('idle'))
+    } catch (e) {
         dispatch(setIsLoading('error'))
     }
 }
