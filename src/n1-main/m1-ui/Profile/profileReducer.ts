@@ -14,7 +14,7 @@ const initialState = {
     page: 1,
     rowsPerPage: 9,
     min: 0,
-    max: 30,
+    max: 110,
     user_id: ""
 }
 

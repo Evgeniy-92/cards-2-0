@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useState } from 'react';
 import styles from "./style.module.scss";
+import {Input} from "@material-ui/core";
 
 type EditableSpanPropsType = {
     value: string
@@ -24,9 +25,7 @@ export const EditableSpan = React.memo(function (props: EditableSpanPropsType) {
     }
 
     return editMode
-        ? <input className={styles.changeName} value={title} onChange={changeTitle} autoFocus onBlur={activateViewMode}/>
-        : <h1 className={styles.glitch } data-text={props.value} onDoubleClick={activateEditMode}>{props.value}</h1>
+        ? <Input placeholder="Enter new name" onChange={changeTitle} autoFocus onBlur={activateViewMode}/>
+        : <h1 className={styles.glitch } title="Click to change name" onDoubleClick={activateEditMode}>{props.value}</h1>
 });
 
-/*
-center__text glitch is-glitching*/
