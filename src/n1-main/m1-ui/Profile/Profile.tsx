@@ -15,10 +15,13 @@ export const Profile = () => {
     const packName = useSelector<AppRootStateType, string>(state => state.profile.packName)
     const page = useSelector<AppRootStateType, number>(state => state.profile.page)
     const rowsPerPage = useSelector<AppRootStateType, number>(state => state.profile.rowsPerPage)
+    const minValue = useSelector<AppRootStateType, number>(state => state.profile.min)
+    const maxValue = useSelector<AppRootStateType, number>(state => state.profile.max)
+    const userId = useSelector<AppRootStateType, string>(state => state.profile.user_id)
 
     useEffect(() => {
-        dispatch(getCardsPack(sortCards, sortName))
-    }, [dispatch, sortCards, sortName, packName, page, rowsPerPage])
+        dispatch(getCardsPack(sortCards, sortName, minValue, maxValue, userId))
+    }, [dispatch, sortCards, sortName, packName, page, rowsPerPage, minValue, maxValue, userId])
 
     const inAuth = useSelector<AppRootStateType, boolean>((state) => state.app.inAuth)
     if (!inAuth) return <Navigate to={'/login'}/>

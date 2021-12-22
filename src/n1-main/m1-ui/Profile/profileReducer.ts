@@ -12,7 +12,10 @@ const initialState = {
     packName: "",
     newCard: {},
     page: 1,
-    rowsPerPage: 9
+    rowsPerPage: 9,
+    min: 0,
+    max: 30,
+    user_id: ""
 }
 
 export const profileReducer = (state: ProfileInitialStateType = initialState, action: ProfileActionType): ProfileInitialStateType => {
@@ -43,6 +46,14 @@ export const profileReducer = (state: ProfileInitialStateType = initialState, ac
                 ...state,
                 rowsPerPage: action.value
             }
+        case "PROFILE/SET_CARDS_NUMBER":
+            return {
+                ...state, min: action.min, max: action.max
+            }
+        case "PROFILE/SET_CARDS_BY_ID":
+            return {
+                ...state, user_id: action.user_id
+            }
         default:
             return state
     }
@@ -61,6 +72,8 @@ export const addPack = (newPack: CardType) => ({type: 'PROFILE/ADD-PACK', newPac
 export const setPage = (newPage: number) => ({type: 'PROFILE/SET-PAGE', newPage} as const)
 export const setRowsPerPage = (value: number) => ({type: 'PROFILE/SET-ROWS-PER-PAGE', value} as const)
 
+export const setChangeCardsNumber = (min: number, max: number) => ({type: 'PROFILE/SET_CARDS_NUMBER', min, max} as const)
+export const setChangeSortCardsById = (user_id: string) => ({type: 'PROFILE/SET_CARDS_BY_ID', user_id} as const)
 
 //thunk
 export const changeUserNameTC = (data: ProfileType) => (dispatch: Dispatch) => {
@@ -75,7 +88,7 @@ export const changeUserNameTC = (data: ProfileType) => (dispatch: Dispatch) => {
         })
 }
 
-export const getCardsPack = (sortCards: number, sortName: string) => async (dispatch: Dispatch, getState: () => AppRootStateType) => {
+export const getCardsPack = (sortCards: number, sortName: string, min: number, max: number, user_id: string) => async (dispatch: Dispatch, getState: () => AppRootStateType) => {
     const state = getState()
     const packName = state.profile.packName
     const page = state.profile.page
@@ -84,14 +97,12 @@ export const getCardsPack = (sortCards: number, sortName: string) => async (disp
 
     try {
         dispatch(setIsLoading('idle'))
-        const res = await profileAPI.getCards({pageCount, page, packName, sortPacks: sortCards + sortName})
+        const res = await profileAPI.getCards({pageCount, page, packName, sortPacks: sortCards + sortName, min, max, user_id})
         dispatch(setCards(res.data))
-        console.log(res.data)
     } catch (e) {
         dispatch(setIsLoading('error'))
     }
 }
-
 export const addCardPack = () => async (dispatch: Dispatch) => {
     dispatch(setIsLoading('loading'))
     try {
@@ -141,3 +152,5 @@ type ProfileActionType =
     | ReturnType<typeof addPack>
     | ReturnType<typeof setPage>
     | ReturnType<typeof setRowsPerPage>
+    | ReturnType<typeof setChangeCardsNumber>
+    | ReturnType<typeof setChangeSortCardsById>
