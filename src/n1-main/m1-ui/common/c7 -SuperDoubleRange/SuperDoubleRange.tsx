@@ -3,7 +3,7 @@ import {Slider} from "@material-ui/core";
 
 type SuperDoubleRangePropsType = {
     onHandleChange?: (newValue: number[]) => void
-    onHandleChanges?: (newValues: number[]) => void
+    onHandleChangeCommitted?: (newValues: number[]) => void
     value?: number[]
     min: number
     max: number
@@ -14,7 +14,7 @@ const SuperDoubleRange: React.FC<SuperDoubleRangePropsType> = (
     {
         onHandleChange, value,
         min, max, step,
-        onHandleChanges
+        onHandleChangeCommitted
     }
 ) => {
 
@@ -22,14 +22,14 @@ const SuperDoubleRange: React.FC<SuperDoubleRangePropsType> = (
         onHandleChange && onHandleChange(newValue as [number, number])
     };
     const handleChanges = (event: React.ChangeEvent<{}>, newValues: number | number[]) => {
-        onHandleChanges && onHandleChanges(newValues as [number, number])
+        onHandleChangeCommitted && onHandleChangeCommitted(newValues as [number, number])
     };
 
     return (
-        <div style={{width: '300px', display: 'inline-block',}}>
-
+        <div>
             <Slider
                 value={value}
+                valueLabelDisplay="auto"
                 onChange={handleChange}
                 onChangeCommitted={handleChanges}
                 aria-labelledby="range-slider"

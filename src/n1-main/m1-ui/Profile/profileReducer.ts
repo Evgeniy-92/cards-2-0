@@ -10,6 +10,7 @@ const initialState = {
     sortByCards: 0 as (0 | 1),
     min: 0,
     max: 30,
+    user_id: ""
 }
 
 export const profileReducer = (state: ProfileInitialStateType = initialState, action: ProfileActionType): ProfileInitialStateType => {
@@ -30,6 +31,10 @@ export const profileReducer = (state: ProfileInitialStateType = initialState, ac
             return {
                 ...state, min: action.min, max: action.max
             }
+        case "PROFILE/SET_CARDS_BY_ID":
+            return {
+                ...state, user_id: action.user_id
+            }
         default:
             return state
     }
@@ -43,7 +48,8 @@ export const setChangeSortCards = (sort: 0 | 1, sortName: string) => ({
     sort,
     sortName
 } as const)
-export const setChangeSortCardsNumber = (min: number, max: number) => ({type: 'PROFILE/SET_CARDS_NUMBER', min, max} as const)
+export const setChangeCardsNumber = (min: number, max: number) => ({type: 'PROFILE/SET_CARDS_NUMBER', min, max} as const)
+export const setChangeSortCardsById = (user_id: string) => ({type: 'PROFILE/SET_CARDS_BY_ID', user_id} as const)
 
 //thunk
 export const changeUserNameTC = (data: ProfileType) => (dispatch: Dispatch) => {
@@ -58,12 +64,12 @@ export const changeUserNameTC = (data: ProfileType) => (dispatch: Dispatch) => {
         })
 }
 
-export const getCardsPack = (sortCards: number, sortName: string, min: number, max: number) => async (dispatch: Dispatch) => {
+export const getCardsPack = (sortCards: number, sortName: string, min: number, max: number, user_id: string) => async (dispatch: Dispatch) => {
     dispatch(setIsLoading('loading'))
 
     try {
         dispatch(setIsLoading('idle'))
-        const res = await profileAPI.getCards({pageCount: 8, sortPacks: sortCards + sortName, min, max})
+        const res = await profileAPI.getCards({pageCount: 8, sortPacks: sortCards + sortName, min, max, user_id})
         dispatch(setCards(res.data))
     } catch (e) {
         dispatch(setIsLoading('error'))
@@ -105,4 +111,5 @@ type ProfileActionType =
     | ReturnType<typeof setIsLoading>
     | ReturnType<typeof setCards>
     | ReturnType<typeof setChangeSortCards>
-    |ReturnType<typeof setChangeSortCardsNumber>
+    | ReturnType<typeof setChangeCardsNumber>
+    | ReturnType<typeof setChangeSortCardsById>

@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import SuperDoubleRange from "../../../common/c7 -SuperDoubleRange/SuperDoubleRange";
 import {useDispatch} from "react-redux";
-import {setChangeSortCardsNumber} from "../../profileReducer";
+import {setChangeCardsNumber} from "../../profileReducer";
+import styles from './../styles.module.scss'
 
 const SortTable = () => {
     const dispatch = useDispatch()
@@ -11,21 +12,23 @@ const SortTable = () => {
         setValues(newValue)
         console.log(newValue)
     }
-    const handleChanges = (values: number[]) => {
+    const onHandleChangeCommitted = (values: number[]) => {
 
-        dispatch(setChangeSortCardsNumber(values[0], values[1]))
+        dispatch(setChangeCardsNumber(values[0], values[1]))
     }
 
     return (
-        <div>
-            <SuperDoubleRange
-                value={values}
-                onHandleChange={handleChange}
-                onHandleChanges={handleChanges}
-                min={1}
-                max={100}
-                step={1}
-            />
+        <div className={styles.rangeBlock}>
+            <span className={styles.range}>
+                <SuperDoubleRange
+                    value={values}
+                    onHandleChange={handleChange}
+                    onHandleChangeCommitted={onHandleChangeCommitted}
+                    min={1}
+                    max={100}
+                    step={1}
+                />
+            </span>
         </div>
     );
 };

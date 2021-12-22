@@ -24,6 +24,7 @@ export type getParamsType = {
     sortPacks?: number | string,
     page?: number,
     pageCount?: number,
+    user_id?: string,
 }
 
 export type ProfileType = {
