@@ -7,14 +7,22 @@ import {
     GetCardsType,
     setChangeSortCards
 } from "../../n1-main/m1-ui/Profile/profileReducer";
+import {getCards} from "./cardsReducer";
+import {useParams} from "react-router-dom";
 
 const header = ['Name', 'Cards', 'Last Update', 'Created by', 'Actions']
 
 const Cards = () => {
+    const dispatch = useDispatch()
     const rows = useSelector<AppRootStateType, GetCardsType | null>((state) => state.profile.cards)
     const sortCards = useSelector<AppRootStateType, number>((state) => state.profile.sortByCards)
     const profileID = useSelector<AppRootStateType, string>((state) => state.login.profileData._id)
     const [nameHeader, setNameHeader] = useState('')
+
+    const {id} = useParams<string>()
+    useEffect(() => {
+        dispatch(getCards(id))
+    }, [])
 
     useEffect(() => {
         const scrollContainer = document.querySelectorAll("#table");
@@ -35,7 +43,6 @@ const Cards = () => {
         }
     });
 
-    const dispatch = useDispatch()
 
     const changeSortCards = (name: string) => {
         const nameClick = name === 'Cards' ? 'cardsCount' : 'updated'
