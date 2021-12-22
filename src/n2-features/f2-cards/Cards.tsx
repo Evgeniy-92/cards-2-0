@@ -1,13 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import styles from './styles.module.scss'
+import styles from './Cards.module.scss'
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "../../../../m2-bll/store";
-import {CardType, GetCardsType, setChangeSortCards} from "../../profileReducer";
-import {useNavigate} from "react-router-dom";
+import {AppRootStateType} from "../../n1-main/m2-bll/store";
+import {
+    CardType,
+    GetCardsType,
+    setChangeSortCards
+} from "../../n1-main/m1-ui/Profile/profileReducer";
 
 const header = ['Name', 'Cards', 'Last Update', 'Created by', 'Actions']
 
-const Table = () => {
+const Cards = () => {
     const rows = useSelector<AppRootStateType, GetCardsType | null>((state) => state.profile.cards)
     const sortCards = useSelector<AppRootStateType, number>((state) => state.profile.sortByCards)
     const profileID = useSelector<AppRootStateType, string>((state) => state.login.profileData._id)
@@ -48,10 +51,6 @@ const Table = () => {
 
     const changeStyleSortCard = ((nameHeader === 'Cards' && sortCards !== 0) && styles.activeCards) || ((nameHeader === 'Last Update' && sortCards !== 0) && styles.activeUpdate)
 
-    const navigate = useNavigate()
-    const handler = (id: string) => {
-        navigate(`/cards/${id}`)
-    }
     return (
         <table className={styles.table}>
             <thead className={styles.thead}>
@@ -86,7 +85,7 @@ const Table = () => {
                                         <span className={styles.btn}>Edit</span>
                                     </>)
                                 }
-                                <span onClick={() => {handler(row._id)}} className={styles.btn}>Learn</span>
+                                <span className={styles.btn}>Learn</span>
                             </div>
 
                         </td>
@@ -99,4 +98,4 @@ const Table = () => {
     );
 };
 
-export default Table;
+export default Cards;
