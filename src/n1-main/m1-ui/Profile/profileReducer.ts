@@ -12,7 +12,7 @@ const initialState = {
     packName: "",
     newCard: {},
     page: 1,
-    rowsPerPage: 8
+    rowsPerPage: 9
 }
 
 export const profileReducer = (state: ProfileInitialStateType = initialState, action: ProfileActionType): ProfileInitialStateType => {
