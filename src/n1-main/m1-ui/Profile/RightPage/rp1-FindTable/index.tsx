@@ -1,13 +1,15 @@
-import React, {ChangeEvent} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import styles from './styles.module.scss'
 import {InputAdornment, TextField} from "@material-ui/core";
 import SearchIcon from '@material-ui/icons/Search';
 import {useDispatch} from "react-redux";
 import {addCardPack, changePackName} from "../../profileReducer";
 import SuperButton from "../../../common/c1-SuperButton/SuperButton";
+import Modal from "../../../common/modal";
 
 
 const FindTable = () => {
+    const [openModal, setOpenModal] = useState(false)
     const dispatch = useDispatch()
     const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         dispatch(changePackName(e.currentTarget.value))
@@ -19,6 +21,7 @@ const FindTable = () => {
     return (
         <>
             <h1>Packs list</h1>
+            <Modal openModal={openModal} setOpenModal={setOpenModal} setActionTC={addNewPack} type={'added'}/>
             <div className={styles.findTable}>
                 <div className={styles.findInput}>
                     <TextField id="outlined-basic"
@@ -35,7 +38,7 @@ const FindTable = () => {
                                    ),
                                }}/>
                 </div>
-                <SuperButton onClick={addNewPack} className={styles.btn}>
+                <SuperButton onClick={setOpenModal.bind(null,true)} className={styles.btn}>
                     Add new pack
                 </SuperButton>
             </div>

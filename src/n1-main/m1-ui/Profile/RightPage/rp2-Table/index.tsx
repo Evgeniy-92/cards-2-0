@@ -3,6 +3,7 @@ import styles from './styles.module.scss'
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../../../m2-bll/store";
 import {CardType, deleteCardPackTC, GetCardsType, setChangeSortCards} from "../../profileReducer";
+import Modal, {ModalTypeAction} from "../../../common/modal";
 
 const header = ['Name', 'Cards', 'Last Update', 'Created by', 'Actions']
 
@@ -11,6 +12,9 @@ const Table = () => {
     const sortCards = useSelector<AppRootStateType, number>((state) => state.profile.sortByCards)
     const profileID = useSelector<AppRootStateType, string>((state) => state.login.profileData._id)
     const [nameHeader, setNameHeader] = useState('')
+    const [openModal, setOpenModal] = useState(false)
+    const [type, setType] = useState<ModalTypeAction>('')
+    const [cardID, setCardID] = useState('')
 
     useEffect(() => {
         const scrollContainer = document.querySelectorAll("#table");
@@ -47,10 +51,16 @@ const Table = () => {
 
     const changeStyleSortCard = ((nameHeader === 'Cards' && sortCards !== 0) && styles.activeCards) || ((nameHeader === 'Last Update' && sortCards !== 0) && styles.activeUpdate)
 
-    const deleteCardPack = (id: string) => dispatch(deleteCardPackTC(id))
+    const deleteCardPack = () => dispatch(deleteCardPackTC(cardID))
 
+    const buttonHandler = (id: string, type: ModalTypeAction) => {
+        setCardID(id)
+        setType(type)
+        setOpenModal(true)
+    }
     return (
         <table className={styles.table}>
+            <Modal openModal={openModal} setOpenModal={setOpenModal} setActionTC={deleteCardPack} type={type}/>
             <thead className={styles.thead}>
 
             {header.map(headerGroup => (
@@ -80,8 +90,9 @@ const Table = () => {
                                 {profileID === row.user_id &&
                                 (<>
                                     <span className={styles.btn} data-color
-                                          onClick={deleteCardPack.bind(null, row._id)}>Delete</span>
-                                    <span className={styles.btn}>Edit</span>
+                                          onClick={buttonHandler.bind(null, row._id, 'delete')}>Delete</span>
+                                    <span className={styles.btn}
+                                          onClick={buttonHandler.bind(null, row._id, 'edit')}>Edit</span>
                                 </>)
                                 }
                                 <span className={styles.btn}>Learn</span>
