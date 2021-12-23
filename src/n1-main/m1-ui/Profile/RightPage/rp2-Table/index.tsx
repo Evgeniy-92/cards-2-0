@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import styles from './styles.module.scss'
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../../../m2-bll/store";
-import {CardType, deleteCardPackTC, GetCardsType, setChangeSortCards} from "../../profileReducer";
+import {CardType, deleteCardPackTC, GetCardsType, setChangeSortCards, updateCardPackTC} from "../../profileReducer";
 import Modal, {ModalTypeAction} from "../../../common/modal";
 
 const header = ['Name', 'Cards', 'Last Update', 'Created by', 'Actions']
@@ -51,8 +51,11 @@ const Table = () => {
 
     const changeStyleSortCard = ((nameHeader === 'Cards' && sortCards !== 0) && styles.activeCards) || ((nameHeader === 'Last Update' && sortCards !== 0) && styles.activeUpdate)
 
-    const deleteCardPack = () => dispatch(deleteCardPackTC(cardID))
-
+    // const deleteCardPack = () => dispatch(deleteCardPackTC(cardID))
+    const updateCardPack = (value?: string) => {
+        type === 'edit' && dispatch(updateCardPackTC({cardsPack: {_id: cardID, name: value}}))
+        type === 'delete' && dispatch(deleteCardPackTC(cardID))
+    }
     const buttonHandler = (id: string, type: ModalTypeAction) => {
         setCardID(id)
         setType(type)
@@ -60,7 +63,7 @@ const Table = () => {
     }
     return (
         <table className={styles.table}>
-            <Modal openModal={openModal} setOpenModal={setOpenModal} setActionTC={deleteCardPack} type={type}/>
+            <Modal openModal={openModal} setOpenModal={setOpenModal} setActionTC={updateCardPack} type={type}/>
             <thead className={styles.thead}>
 
             {header.map(headerGroup => (

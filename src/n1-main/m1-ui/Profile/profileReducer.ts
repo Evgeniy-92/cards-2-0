@@ -1,4 +1,4 @@
-import profileAPI, {ProfileType} from "./api-profile";
+import profileAPI, {getParamsNewPackType, ProfileType} from "./api-profile";
 import {setIsLoading} from "../appReducer";
 import {Dispatch} from "redux";
 import {AppRootStateType} from "../../m2-bll/store";
@@ -130,6 +130,18 @@ export const deleteCardPackTC = (id: string) => async (dispatch: Dispatch) => {
     try {
         const res = await profileAPI.deleteCardPack(id)
         dispatch(setIsLoading('idle'))
+    } catch (e) {
+        dispatch(setIsLoading('error'))
+    }
+}
+
+export const updateCardPackTC = (data: getParamsNewPackType) => async (dispatch: Dispatch) => {
+    dispatch(setIsLoading('loading'))
+
+    try {
+        const res = await profileAPI.updateCardPack(data)
+        dispatch(setIsLoading('idle'))
+
     } catch (e) {
         dispatch(setIsLoading('error'))
     }

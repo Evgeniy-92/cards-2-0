@@ -9,7 +9,7 @@ export type ModalTypeAction = 'added' | 'delete' | 'edit' | ''
 type ModalType = {
     openModal?: boolean;
     setOpenModal?: (bool: boolean) => void;
-    setActionTC?: () => void;
+    setActionTC?: (value?: string) => void;
     type: ModalTypeAction
 }
 
@@ -39,7 +39,7 @@ const Modal = ({openModal, setOpenModal, setActionTC, type}: ModalType) => {
                 }
 
                 <div className={styles.btn}>
-                    <Button variant="contained" onClick={setActionTC}>Confirm</Button>
+                    <Button variant="contained" onClick={setActionTC?.bind(null, value)}>Confirm</Button>
                     <Button onClick={() =>   //@ts-ignore
                         setOpenModal(false)} variant="outlined">Exit</Button>
                 </div>
