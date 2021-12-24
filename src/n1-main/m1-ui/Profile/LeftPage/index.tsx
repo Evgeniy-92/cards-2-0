@@ -7,9 +7,11 @@ import SortTableById from "./lp3-SortTableById/SortTableById";
 const LeftPage = () => {
     return (
         <div className={styles.main}>
-            <SortTableById/>
             <User/>
-            <SortTable/>
+            <div className={styles.sortBlock}>
+                <SortTableById/>
+                <SortTable/>
+            </div>
         </div>
     );
 };

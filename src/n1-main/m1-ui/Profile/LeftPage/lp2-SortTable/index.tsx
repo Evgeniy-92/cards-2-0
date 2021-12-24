@@ -6,7 +6,7 @@ import styles from './../styles.module.scss'
 
 const SortTable = () => {
     const dispatch = useDispatch()
-    let [values, setValues] = useState<number[]>([0, 100])
+    let [values, setValues] = useState<number[]>([0, 110])
 
     const handleChange = (newValue: number[]) => {
         setValues(newValue)
@@ -19,16 +19,17 @@ const SortTable = () => {
 
     return (
         <div className={styles.rangeBlock}>
-            <span className={styles.range}>
+            <span>Cards limit</span>
+            <div className={styles.range}>
                 <SuperDoubleRange
                     value={values}
                     onHandleChange={handleChange}
                     onHandleChangeCommitted={onHandleChangeCommitted}
                     min={0}
-                    max={100}
+                    max={110}
                     step={1}
                 />
-            </span>
+            </div>
         </div>
     );
 };
