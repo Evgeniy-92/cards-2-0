@@ -17,6 +17,12 @@ export const profileAPI = {
     },
     addNewPack: (data: getParamsNewPackType) => {
         return axiosInstance.post("/cards/pack", data)
+    },
+    deleteCardPack: (id: string) => {
+        return axiosInstance.delete(`cards/pack?id=${id}`)
+    },
+    updateCardPack: (data: getParamsNewPackType) => {
+        return axiosInstance.put(`cards/pack`, data)
     }
 };
 
@@ -33,6 +39,7 @@ export type cardsPackType = {
     deckCover?: string
     private?: boolean
     type?: string
+    _id?: string
 }
 
 export type getParamsType = {

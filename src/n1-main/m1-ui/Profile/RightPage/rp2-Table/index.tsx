@@ -2,8 +2,10 @@ import React, {useEffect, useState} from 'react';
 import styles from './styles.module.scss'
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../../../m2-bll/store";
-import {CardType, GetCardsType, setChangeSortCards} from "../../profileReducer";
 import {useNavigate} from "react-router-dom";
+import {CardType, deleteCardPackTC, GetCardsType, setChangeSortCards, updateCardPackTC} from "../../profileReducer";
+import Modal, {ModalTypeAction} from "../../../common/modal";
+
 
 const header = ['Name', 'Cards', 'Last Update', 'Created by', 'Actions']
 
@@ -12,6 +14,9 @@ const Table = () => {
     const sortCards = useSelector<AppRootStateType, number>((state) => state.profile.sortByCards)
     const profileID = useSelector<AppRootStateType, string>((state) => state.login.profileData._id)
     const [nameHeader, setNameHeader] = useState('')
+    const [openModal, setOpenModal] = useState(false)
+    const [type, setType] = useState<ModalTypeAction>('')
+    const [cardID, setCardID] = useState('')
 
     useEffect(() => {
         const scrollContainer = document.querySelectorAll("#table");
@@ -52,8 +57,20 @@ const Table = () => {
     const handler = (id: string) => {
         navigate(`/cards/${id}`)
     }
+
+    // const deleteCardPack = () => dispatch(deleteCardPackTC(cardID))
+    const updateCardPack = (value?: string) => {
+        type === 'edit' && dispatch(updateCardPackTC({cardsPack: {_id: cardID, name: value}}))
+        type === 'delete' && dispatch(deleteCardPackTC(cardID))
+    }
+    const buttonHandler = (id: string, type: ModalTypeAction) => {
+        setCardID(id)
+        setType(type)
+        setOpenModal(true)
+    }
     return (
         <table className={styles.table}>
+            <Modal openModal={openModal} setOpenModal={setOpenModal} setActionTC={updateCardPack} type={type}/>
             <thead className={styles.thead}>
 
             {header.map(headerGroup => (
@@ -81,10 +98,12 @@ const Table = () => {
 
                             <div className={`${styles.rowItem} ${styles.btnBox}`}>
                                 {profileID === row.user_id &&
-                                    (<>
-                                        <span className={styles.btn} data-color>Delete</span>
-                                        <span className={styles.btn}>Edit</span>
-                                    </>)
+                                (<>
+                                    <span className={styles.btn} data-color
+                                          onClick={buttonHandler.bind(null, row._id, 'delete')}>Delete</span>
+                                    <span className={styles.btn}
+                                          onClick={buttonHandler.bind(null, row._id, 'edit')}>Edit</span>
+                                </>)
                                 }
                                 <span onClick={() => {handler(row._id)}} className={styles.btn}>Learn</span>
                             </div>

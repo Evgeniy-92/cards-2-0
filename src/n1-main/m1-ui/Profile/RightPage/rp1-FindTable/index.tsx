@@ -11,7 +11,7 @@ type FindTableType = {
     changeName: (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void
 }
 
-const FindTable = (props: FindTableType) => {
+    const FindTable = (props: FindTableType) => {
 
     return (
         <>
