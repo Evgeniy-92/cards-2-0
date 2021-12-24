@@ -10,6 +10,7 @@ import {
     ForgetPassword
 } from "../../../n2-features/f1-auth/a3-forget/f1-ui/ForgetPassword";
 import {CheckEmail} from "../../../n2-features/f1-auth/a3-forget/f1-ui/CheckEmail";
+import PackName from "../Profile/RightPage/rp4-PackName";
 
 
 
@@ -26,6 +27,7 @@ export const AppRoutes = () => {
                 <Route path='profile' element={<Profile/>}/>
                 <Route path='*' element={<NotFound/>}/>
                 <Route path='test' element={<TestComponent/>}/>
+                <Route path='pack-name' element={<PackName/>}/>
             </Routes>
         </div>
     )

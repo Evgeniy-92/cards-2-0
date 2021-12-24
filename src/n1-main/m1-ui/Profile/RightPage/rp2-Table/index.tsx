@@ -3,6 +3,7 @@ import styles from './styles.module.scss'
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../../../m2-bll/store";
 import {CardType, GetCardsType, setChangeSortCards} from "../../profileReducer";
+import {Navigate} from "react-router-dom";
 
 const header = ['Name', 'Cards', 'Last Update', 'Created by', 'Actions']
 

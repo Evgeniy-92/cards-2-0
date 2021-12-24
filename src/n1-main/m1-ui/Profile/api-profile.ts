@@ -17,8 +17,21 @@ export const profileAPI = {
     },
     addNewPack: (data: getParamsNewPackType) => {
         return axiosInstance.post("/cards/pack", data)
+    },
+    getCard: (getParamsCard: getParamsCardType) => {
+        return axiosInstance.get("/cards/card", {params: getParamsCard})
     }
 };
+
+export type getParamsCardType = {
+    cardAnswer?: string
+    cardQuestion?: string
+    min?: number
+    max?: number
+    sortCards?: number
+    page?: number
+    pageCount?: number
+}
 
 export type getParamsNewPackType = {
     cardsPack: cardsPackType

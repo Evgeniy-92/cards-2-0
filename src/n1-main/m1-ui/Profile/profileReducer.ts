@@ -15,7 +15,8 @@ const initialState = {
     rowsPerPage: 9,
     min: 0,
     max: 110,
-    user_id: ""
+    user_id: "",
+    card: null as (null | GetCardType)
 }
 
 export const profileReducer = (state: ProfileInitialStateType = initialState, action: ProfileActionType): ProfileInitialStateType => {
@@ -54,6 +55,10 @@ export const profileReducer = (state: ProfileInitialStateType = initialState, ac
             return {
                 ...state, user_id: action.user_id
             }
+        case "PROFILE/SET_USER_CARDS":
+            return {
+                ...state,
+            }
         default:
             return state
     }
@@ -74,6 +79,8 @@ export const setRowsPerPage = (value: number) => ({type: 'PROFILE/SET-ROWS-PER-P
 
 export const setChangeCardsNumber = (min: number, max: number) => ({type: 'PROFILE/SET_CARDS_NUMBER', min, max} as const)
 export const setChangeSortCardsById = (user_id: string) => ({type: 'PROFILE/SET_CARDS_BY_ID', user_id} as const)
+
+export const setUserCards = (cards: GetCardType) => ({type: 'PROFILE/SET_USER_CARDS', cards} as const)
 
 //thunk
 export const changeUserNameTC = (data: ProfileType) => (dispatch: Dispatch) => {
@@ -112,8 +119,47 @@ export const addCardPack = () => async (dispatch: Dispatch) => {
         dispatch(setIsLoading('error'))
     }
 }
+
+export const getCards = () => async (dispatch: Dispatch, getState: () => AppRootStateType) => {
+    dispatch(setIsLoading('loading'))
+
+    try {
+        dispatch(setIsLoading('idle'))
+        const res = await profileAPI.getCards({})
+        dispatch(setUserCards(res.data))
+    } catch (e) {
+        dispatch(setIsLoading('error'))
+    }
+}
 // type
 type ProfileInitialStateType = typeof initialState
+
+export type GetCardType = {
+    card: [
+        CType
+    ]
+    cardsTotalCount: number
+    maxGrade: number
+    minGrade: number
+    page: number
+    pageCount: number
+    packUserId: string
+}
+export type CType = {
+    answer: string
+    question: string
+    cardsPack_id: string
+    grade: number
+    rating: number
+    shots: number
+    type: string
+    user_id: string
+    created: string
+    updated: string
+    __v: number
+    _id: string
+}
+
 export type GetCardsType = {
     cardPacks: [
         CardType
@@ -154,3 +200,4 @@ type ProfileActionType =
     | ReturnType<typeof setRowsPerPage>
     | ReturnType<typeof setChangeCardsNumber>
     | ReturnType<typeof setChangeSortCardsById>
+    | ReturnType<typeof setUserCards>
