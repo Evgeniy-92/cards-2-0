@@ -2,7 +2,7 @@
     max-width: 1000px;
     width: 100%;
     box-shadow: 0 4px 14px rgba(45, 46, 70, 0.15);
-    //height: 500px;
+    height: 500px;
 }
 
 .thead {
@@ -31,8 +31,8 @@
             content: '▲';
             font-size: 15px;
             position: absolute;
-            top: 13px;
-            left: 30%;
+            top: 16px;
+            left: 52%;
             width: 1.4em;
             height: 1.4em;
             line-height: 1.3em;
@@ -47,8 +47,8 @@
             content: '▲';
             font-size: 15px;
             position: absolute;
-            top: 13px;
-            left: 53%;
+            top: 16px;
+            left: 30%;
             width: 1.4em;
             height: 1.4em;
             line-height: 1.3em;
@@ -57,31 +57,32 @@
     }
 }
 
-//
-.activeCards {
+
+.activeUpdate {
     &:nth-child(2) {
         position: relative;
 
         &:before {
             content: '▼';
-            top: 23px;
+            top: 18px;
         }
     }
 }
 
-.activeUpdate {
+.activeGrade {
     &:nth-child(3) {
         position: relative;
 
         &:before {
             content: '▼';
-            top: 23px;
+            top: 18px;
         }
     }
 }
 
 .rows {
     width: 100%;
+    height: 445px;
 }
 
 .rowe {
@@ -116,7 +117,6 @@
 
 .btnBox {
     display: flex;
-    justify-content: space-between;
     align-items: center;
 }
 
@@ -126,6 +126,9 @@
     border-radius: 2px;
     background: #D7D8EF;
     cursor: pointer;
+    &:nth-child(1) {
+        margin-right: 10px;
+    }
 }
 
 .btn[data-color] {

@@ -1,28 +1,22 @@
 import React, {useEffect, useState} from 'react';
-import styles from './Cards.module.scss'
+import styles from './TableCards.module.scss'
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "../../n1-main/m2-bll/store";
+import {AppRootStateType} from "../../../n1-main/m2-bll/store";
 import {
     CardType,
     GetCardsType,
     setChangeSortCards
-} from "../../n1-main/m1-ui/Profile/profileReducer";
-import {getCards} from "./cardsReducer";
-import {useParams} from "react-router-dom";
+} from "../c2-bll/cardsReducer";
 
-const header = ['Name', 'Cards', 'Last Update', 'Created by', 'Actions']
+const header = ['Question', 'Last Update', 'Grade', 'Actions']
 
-const Cards = () => {
+const TableCards = () => {
     const dispatch = useDispatch()
-    const rows = useSelector<AppRootStateType, GetCardsType | null>((state) => state.profile.cards)
-    const sortCards = useSelector<AppRootStateType, number>((state) => state.profile.sortByCards)
+    const rows = useSelector<AppRootStateType, GetCardsType | null>((state) => state.cards.cards)
+    const sortCards = useSelector<AppRootStateType, number>((state) => state.cards.sortByCards)
     const profileID = useSelector<AppRootStateType, string>((state) => state.login.profileData._id)
     const [nameHeader, setNameHeader] = useState('')
 
-    const {id} = useParams<string>()
-    useEffect(() => {
-        dispatch(getCards(id))
-    }, [])
 
     useEffect(() => {
         const scrollContainer = document.querySelectorAll("#table");
@@ -45,8 +39,8 @@ const Cards = () => {
 
 
     const changeSortCards = (name: string) => {
-        const nameClick = name === 'Cards' ? 'cardsCount' : 'updated'
-        if (name === 'Cards' || name === 'Last Update') {
+        const nameClick = name === 'Grade' ? 'grade' : 'updated'
+        if (name === 'Last Update' || name === 'Grade') {
             if (sortCards === 0) {
                 dispatch(setChangeSortCards(1, nameClick))
             } else {
@@ -56,7 +50,7 @@ const Cards = () => {
         setNameHeader(name)
     }
 
-    const changeStyleSortCard = ((nameHeader === 'Cards' && sortCards !== 0) && styles.activeCards) || ((nameHeader === 'Last Update' && sortCards !== 0) && styles.activeUpdate)
+    const changeStyleSortCard = ((nameHeader === 'Grade' && sortCards !== 0) && styles.activeGrade) || ((nameHeader === 'Last Update' && sortCards !== 0) && styles.activeUpdate)
 
     return (
         <table className={styles.table}>
@@ -65,7 +59,9 @@ const Cards = () => {
             {header.map(headerGroup => (
                 <tr className={`${styles.tableHeader} ${changeStyleSortCard}`}
                     key={headerGroup}
-                    onClick={() => changeSortCards(headerGroup)}>
+                    onClick={() => {
+                        changeSortCards(headerGroup)
+                    }}>
                     <th className={styles.column}>
                         {headerGroup}
                     </th>
@@ -75,15 +71,14 @@ const Cards = () => {
 
             <tbody className={styles.rows}>
 
-            {rows?.cardPacks.map((row: CardType) => {
+            {rows?.cards.map((row: CardType) => {
                 return (
                     <tr className={styles.rowe} key={row._id}>
                         <td className={styles.row}>
 
-                            <span className={styles.rowItem} id={'table'}>{row.name}</span>
-                            <span className={styles.rowItem} id={'table'}>{row.cardsCount}</span>
+                            <span className={styles.rowItem} id={'table'}>{row.answer}</span>
                             <span className={styles.rowItem} id={'table'}>{row.updated.slice(0, 10)}</span>
-                            <span className={styles.rowItem} id={'table'}> {row.user_name}</span>
+                            <span className={styles.rowItem} id={'table'}> {row.grade}</span>
 
                             <div className={`${styles.rowItem} ${styles.btnBox}`}>
                                 {profileID === row.user_id &&
@@ -92,7 +87,6 @@ const Cards = () => {
                                         <span className={styles.btn}>Edit</span>
                                     </>)
                                 }
-                                <span className={styles.btn}>Learn</span>
                             </div>
 
                         </td>
@@ -105,4 +99,4 @@ const Cards = () => {
     );
 };
 
-export default Cards;
+export default TableCards;

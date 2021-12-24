@@ -1,5 +1,5 @@
 import React from "react";
-import {Routes, Route} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import {NotFound} from "../common/c4-NotFound/NotFound";
 import {NewPassword} from "../../NewPassword/NewPassword";
 import {Profile} from "../Profile/Profile";
@@ -10,8 +10,7 @@ import {
     ForgetPassword
 } from "../../../n2-features/f1-auth/a3-forget/f1-ui/ForgetPassword";
 import {CheckEmail} from "../../../n2-features/f1-auth/a3-forget/f1-ui/CheckEmail";
-import Cards from "../../../n2-features/f2-cards/Cards";
-
+import {CardsContainer} from "../../../n2-features/f2-cards/c1-ui/CardsContainer";
 
 
 export const AppRoutes = () => {
@@ -27,7 +26,7 @@ export const AppRoutes = () => {
                 <Route path='profile' element={<Profile/>}/>
                 <Route path='*' element={<NotFound/>}/>
                 <Route path='test' element={<TestComponent/>}/>
-                <Route path='cards/:id' element={<Cards/>}/>
+                <Route path='cards/:id' element={<CardsContainer/>}/>
             </Routes>
         </div>
     )
