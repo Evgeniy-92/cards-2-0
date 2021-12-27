@@ -21,6 +21,7 @@ const Cards = () => {
         dispatch(addCard(id))
     }
 
+
     const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         dispatch(changeSearchName(e.currentTarget.value))
     }

@@ -6,6 +6,7 @@ import styles from "./CardsContainer.module.scss"
 import {useParams} from "react-router-dom";
 import {getCards} from "../c2-bll/cardsReducer";
 import {AppRootStateType} from "../../../n1-main/m2-bll/store";
+import Learn from "../../f3-learn/learn";
 
 export const CardsContainer = () => {
 

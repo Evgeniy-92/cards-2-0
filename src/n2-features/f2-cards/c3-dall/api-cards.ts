@@ -12,6 +12,9 @@ export const cardsAPI = {
     getCards: (getParamsCards: getParamsCardsType) => {
         return axiosInstance.get("cards/card", {params: getParamsCards})
     },
+    getLearnCards: (getParamsCards: getParamsCardsType) => {
+        return axiosInstance.get("cards/card", {params: getParamsCards})
+    },
     addNewCard: (data: getParamsNewCardType) => {
         return axiosInstance.post("cards/card", data)
     }

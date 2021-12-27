@@ -3,14 +3,22 @@ import styles from './styles.module.scss'
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../../../m2-bll/store";
 import {useNavigate} from "react-router-dom";
-import {CardType, deleteCardPackTC, GetCardsType, setChangeSortCards, updateCardPackTC} from "../../profileReducer";
+import {
+    CardType,
+    deleteCardPackTC,
+    GetCardsType,
+    setChangeSortCards,
+    updateCardPackTC
+} from "../../profileReducer";
 import Modal, {ModalTypeAction} from "../../../common/modal";
+import {setPage} from "../../../../../n2-features/f2-cards/c2-bll/cardsReducer";
 
 
 const header = ['Name', 'Cards', 'Last Update', 'Created by', 'Actions']
 
 const Table = () => {
     const rows = useSelector<AppRootStateType, GetCardsType | null>((state) => state.profile.cards)
+    //const num = useSelector<AppRootStateType, any>((state) => state.cards.cards)
     const sortCards = useSelector<AppRootStateType, number>((state) => state.profile.sortByCards)
     const profileID = useSelector<AppRootStateType, string>((state) => state.login.profileData._id)
     const [nameHeader, setNameHeader] = useState('')
@@ -57,6 +65,10 @@ const Table = () => {
     const handler = (id: string) => {
         navigate(`/cards/${id}`)
     }
+    const nameHandler = (id: string) => {
+        //dispatch(setPage(num.length))
+        navigate(`/learn/${id}`)
+    }
 
     // const deleteCardPack = () => dispatch(deleteCardPackTC(cardID))
     const updateCardPack = (value?: string) => {
@@ -91,7 +103,7 @@ const Table = () => {
                     <tr className={styles.rowe} key={row._id}>
                         <td className={styles.row}>
 
-                            <span className={styles.rowItem} id={'table'}>{row.name}</span>
+                            <span className={styles.rowItem} id={'table'} onClick={() => nameHandler(row._id)}>{row.name}</span>
                             <span className={styles.rowItem} id={'table'}>{row.cardsCount}</span>
                             <span className={styles.rowItem} id={'table'}>{row.updated.slice(0, 10)}</span>
                             <span className={styles.rowItem} id={'table'}> {row.user_name}</span>

@@ -82,13 +82,23 @@ export const addCard = (cardsPack_id: string | undefined) => async (dispatch: Di
         dispatch(setIsLoading('error'))
     }
 }
+export const getLearnCards = (cardsPack_id: string | undefined) => async (dispatch: Dispatch, getState: () => AppRootStateType) => {
+    const state = getState()
+    const pageCount = 1000
+    dispatch(setIsLoading('loading'))
+    try {
+        dispatch(setIsLoading('idle'))
+        const res = await cardsAPI.getLearnCards({cardsPack_id, pageCount})
+        dispatch(setCards(res.data))
+    } catch (e) {
+        dispatch(setIsLoading('error'))
+    }
+}
 
 // type
 type CardsInitialStateType = typeof initialState
 export type GetCardsType = {
-    cards: [
-        CardType
-    ]
+    cards: [CardType]
     cardsTotalCount: number
     maxGrade: number
     minGrade: number
