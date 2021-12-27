@@ -1,20 +1,42 @@
-import React, {ChangeEvent} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import styles from './styles.module.scss'
 import {InputAdornment, TextField} from "@material-ui/core";
 import SearchIcon from '@material-ui/icons/Search';
 import SuperButton from "../../../common/c1-SuperButton/SuperButton";
+import {addCardPack, deleteCardPackTC, updateCardPackTC} from "../../profileReducer";
+import Modal, {ModalTypeAction} from "../../../common/modal";
+import {useDispatch, useSelector} from "react-redux";
+import {addCardTC} from "../../../../../n2-features/f2-cards/c2-bll/cardsReducer";
+import {AppRootStateType} from "../../../../m2-bll/store";
+import {useParams} from "react-router-dom";
 
 type FindTableType = {
     namePage: string | undefined
     nameBtn: string
-    addElement: () => void
     changeName: (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void
+    type: 'added' | 'addedItem'
 }
 
-    const FindTable = (props: FindTableType) => {
+const FindTable = (props: FindTableType) => {
+    const dispatch = useDispatch()
+    const userIDCard = useSelector<AppRootStateType, any>((state) => state.cards.cards)
+    const profileID = useSelector<AppRootStateType, string>((state) => state.login.profileData._id)
+    const [openModal, setOpenModal] = useState(false)
+    const [type, setType] = useState<ModalTypeAction>('')
+    const {id} = useParams()
+    const updateCardPack = (value?: string, value2?: string) => {
+        props.type === 'added' && (type === props.type && dispatch(addCardPack(value)))
+        props.type === 'addedItem' && (type === props.type && dispatch(addCardTC(id, value2, value)))
+    }
+    const buttonHandler = () => {
+        props.type === 'added' && setType('added')
+        props.type === 'addedItem' && setType('addedItem')
+        setOpenModal(true)
+    }
 
     return (
         <>
+            <Modal openModal={openModal} setOpenModal={setOpenModal} setActionTC={updateCardPack} type={type}/>
             <h1>{props.namePage}</h1>
             <div className={styles.findTable}>
                 <div className={styles.findInput}>
@@ -32,9 +54,11 @@ type FindTableType = {
                                    ),
                                }}/>
                 </div>
-                <SuperButton onClick={props.addElement} className={styles.btn}>
-                    {props.nameBtn}
-                </SuperButton>
+                {(userIDCard?.packUserId === profileID || props.type === 'added') && (
+                    <SuperButton className={styles.btn} onClick={buttonHandler.bind(null)}>
+                        {props.nameBtn}
+                    </SuperButton>
+                )}
             </div>
         </>
     )

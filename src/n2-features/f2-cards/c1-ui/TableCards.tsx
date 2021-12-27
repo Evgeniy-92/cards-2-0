@@ -3,10 +3,12 @@ import styles from './TableCards.module.scss'
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../../n1-main/m2-bll/store";
 import {
-    CardType,
+    CardType, deleteCardItemTC,
     GetCardsType,
-    setChangeSortCards
+    setChangeSortCards, updateCardItemTC
 } from "../c2-bll/cardsReducer";
+import {deleteCardPackTC, updateCardPackTC} from "../../../n1-main/m1-ui/Profile/profileReducer";
+import Modal, {ModalTypeAction} from "../../../n1-main/m1-ui/common/modal";
 
 const header = ['Question', 'Last Update', 'Grade', 'Actions']
 
@@ -16,7 +18,9 @@ const TableCards = () => {
     const sortCards = useSelector<AppRootStateType, number>((state) => state.cards.sortByCards)
     const profileID = useSelector<AppRootStateType, string>((state) => state.login.profileData._id)
     const [nameHeader, setNameHeader] = useState('')
-
+    const [openModal, setOpenModal] = useState(false)
+    const [type, setType] = useState<ModalTypeAction>('')
+    const [cardID, setCardID] = useState('')
 
     useEffect(() => {
         const scrollContainer = document.querySelectorAll("#table");
@@ -50,10 +54,24 @@ const TableCards = () => {
         setNameHeader(name)
     }
 
-    const changeStyleSortCard = ((nameHeader === 'Grade' && sortCards !== 0) && styles.activeGrade) || ((nameHeader === 'Last Update' && sortCards !== 0) && styles.activeUpdate)
+    const changeStyleSortCard =
+        ((nameHeader === 'Grade' && sortCards !== 0) && styles.activeGrade) ||
+        ((nameHeader === 'Last Update' && sortCards !== 0) && styles.activeUpdate)
+
+    const updateCardPack = (value?: string) => {
+        //@ts-ignore
+        type === 'editItem' && dispatch(updateCardItemTC(value, cardID))
+        type === 'deleteItem' && dispatch(deleteCardItemTC(cardID))
+    }
+    const buttonHandler = (id: string, type: ModalTypeAction) => {
+        setCardID(id)
+        setType(type)
+        setOpenModal(true)
+    }
 
     return (
         <table className={styles.table}>
+            <Modal openModal={openModal} setOpenModal={setOpenModal} setActionTC={updateCardPack} type={type}/>
             <thead className={styles.thead}>
 
             {header.map(headerGroup => (
@@ -76,16 +94,18 @@ const TableCards = () => {
                     <tr className={styles.rowe} key={row._id}>
                         <td className={styles.row}>
 
-                            <span className={styles.rowItem} id={'table'}>{row.answer}</span>
+                            <span className={styles.rowItem} id={'table'}>{row.question}</span>
                             <span className={styles.rowItem} id={'table'}>{row.updated.slice(0, 10)}</span>
                             <span className={styles.rowItem} id={'table'}> {row.grade}</span>
 
                             <div className={`${styles.rowItem} ${styles.btnBox}`}>
                                 {profileID === row.user_id &&
-                                    (<>
-                                        <span className={styles.btn} data-color>Delete</span>
-                                        <span className={styles.btn}>Edit</span>
-                                    </>)
+                                (<>
+                                    <span className={styles.btn} data-color
+                                          onClick={buttonHandler.bind(null, row._id, 'deleteItem')}>Delete</span>
+                                    <span className={styles.btn}
+                                          onClick={buttonHandler.bind(null, row._id, 'editItem')}>Edit</span>
+                                </>)
                                 }
                             </div>
 

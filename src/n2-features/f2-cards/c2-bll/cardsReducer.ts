@@ -66,19 +66,45 @@ export const getCards = (cardsPack_id: string | undefined) => async (dispatch: D
     dispatch(setIsLoading('loading'))
     try {
         dispatch(setIsLoading('idle'))
-        const res = await cardsAPI.getCards({pageCount, page, cardAnswer, cardsPack_id, sortCards: sortByCards + sortName})
+        const res = await cardsAPI.getCards({
+            pageCount,
+            page,
+            cardAnswer,
+            cardsPack_id,
+            sortCards: sortByCards + sortName
+        })
         dispatch(setCards(res.data))
     } catch (e) {
         dispatch(setIsLoading('error'))
     }
 }
 
-export const addCard = (cardsPack_id: string | undefined) => async (dispatch: Dispatch) => {
+export const addCardTC = (cardsPack_id: string | undefined, answer: string | undefined, question: string | undefined) => async (dispatch: Dispatch) => {
     dispatch(setIsLoading('loading'))
     try {
-        const res = await cardsAPI.addNewCard({card: {cardsPack_id}})
+        await cardsAPI.addNewCard({card: {cardsPack_id, answer: answer, question: question}})
         dispatch(setIsLoading('idle'))
-    }catch (e) {
+    } catch (e) {
+        dispatch(setIsLoading('error'))
+    }
+}
+
+export const deleteCardItemTC = (id: string) => async (dispatch: Dispatch) => {
+    dispatch(setIsLoading('loading'))
+    try {
+        await cardsAPI.deleteCardItem(id)
+        dispatch(setIsLoading('idle'))
+    } catch (e) {
+        dispatch(setIsLoading('error'))
+    }
+}
+
+export const updateCardItemTC = (value: string, id: string) => async (dispatch: Dispatch) => {
+    dispatch(setIsLoading('loading'))
+    try {
+        await cardsAPI.updateCardItem(value, id)
+        dispatch(setIsLoading('idle'))
+    } catch (e) {
         dispatch(setIsLoading('error'))
     }
 }

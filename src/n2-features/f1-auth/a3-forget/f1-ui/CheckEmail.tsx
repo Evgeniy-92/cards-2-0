@@ -12,7 +12,7 @@ export const CheckEmail = () => {
                 <div className={styles.intro}>
                     <h1>It-incubator</h1>
                     <div className={styles.iconBox}>
-                        <img className={styles.icon} src={iconEmail}/>
+                        <img className={styles.icon} src={iconEmail} alt="forget"/>
                     </div>
                     <h3>Check Email</h3>
                     <div className={styles.message}>{`We sent an Email with instructions to ${email}, you can close this tab`}</div>

@@ -1,5 +1,4 @@
 import axios, {AxiosResponse} from 'axios'
-import {serverAPI} from "../../../../n1-main/m1-ui/common/helpers/findServer";
 
 
 const instance = axios.create({

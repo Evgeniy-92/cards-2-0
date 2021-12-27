@@ -82,12 +82,13 @@ export const setChangeSortCardsById = (user_id: string) => ({type: 'PROFILE/SET_
 //thunk
 export const changeUserNameTC = (data: ProfileType) => (dispatch: Dispatch) => {
     dispatch(setIsLoading('loading'))
+
     profileAPI.changeUserName(data)
         .then((res) => {
             dispatch(changeUserNameAC(res.data.updatedUser.name))
             dispatch(setIsLoading('idle'))
         })
-        .catch(error => {
+        .catch(() => {
             dispatch(setIsLoading('error'))
         })
 }
@@ -115,20 +116,22 @@ export const getCardsPack = (sortCards: number, sortName: string, min: number, m
         dispatch(setIsLoading('error'))
     }
 }
-export const addCardPack = () => async (dispatch: Dispatch) => {
+export const addCardPack = (name?: string) => async (dispatch: Dispatch) => {
     dispatch(setIsLoading('loading'))
+
     try {
-        const res = await profileAPI.addNewPack({cardsPack: {}})
+        await profileAPI.addNewPack({cardsPack: {name}})
         dispatch(setIsLoading('idle'))
     } catch (e) {
         dispatch(setIsLoading('error'))
     }
 }
+
 export const deleteCardPackTC = (id: string) => async (dispatch: Dispatch) => {
     dispatch(setIsLoading('loading'))
 
     try {
-        const res = await profileAPI.deleteCardPack(id)
+        await profileAPI.deleteCardPack(id)
         dispatch(setIsLoading('idle'))
     } catch (e) {
         dispatch(setIsLoading('error'))
@@ -139,7 +142,7 @@ export const updateCardPackTC = (data: getParamsNewPackType) => async (dispatch:
     dispatch(setIsLoading('loading'))
 
     try {
-        const res = await profileAPI.updateCardPack(data)
+        await profileAPI.updateCardPack(data)
         dispatch(setIsLoading('idle'))
 
     } catch (e) {

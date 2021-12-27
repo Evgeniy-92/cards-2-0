@@ -13,19 +13,17 @@ const RightPage = () => {
     const page = useSelector<AppRootStateType, number>((state) => state.profile.page)
     const rowsPerPage = useSelector<AppRootStateType, number>((state) => state.profile.rowsPerPage)
 
-    const addNewCard = () => {
-        dispatch(addCardPack())
-    }
-
     const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         dispatch(changePackName(e.currentTarget.value))
     }
 
     return (
         <div className={styles.main}>
-            <FindTable namePage={'Packs list'} nameBtn={'Add new pack'} addElement={addNewCard} changeName={onChangeHandler}/>
+            <FindTable namePage={'Packs list'} nameBtn={'Add new pack'}
+                       changeName={onChangeHandler} type={'added'}/>
             <Table/>
-            <Paginate totalCount={cardPacksTotalCount} page={page} rowsPerPage={rowsPerPage} setPage={setPage} setRowsPerPage={setRowsPerPage}/>
+            <Paginate totalCount={cardPacksTotalCount} page={page} rowsPerPage={rowsPerPage} setPage={setPage}
+                      setRowsPerPage={setRowsPerPage}/>
         </div>
     );
 };

@@ -14,6 +14,12 @@ export const cardsAPI = {
     },
     addNewCard: (data: getParamsNewCardType) => {
         return axiosInstance.post("cards/card", data)
+    },
+    deleteCardItem: (id: string) => {
+        return axiosInstance.delete(`cards/card?id=${id}`)
+    },
+    updateCardItem: (value: string, _id: string) => {
+        return axiosInstance.put('cards/card', {card: {question: value, _id: _id}})
     }
 };
 

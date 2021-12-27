@@ -20,7 +20,7 @@ export const CardsContainer = () => {
     const {id} = useParams<string>()
     useEffect(() => {
         dispatch(getCards(id))
-    }, [dispatch, sortName, sortByCards, searchName, page, rowsPerPage])
+    }, [dispatch, sortName, sortByCards, searchName, page, rowsPerPage, id])
 
     return (
         <ContainerAuth>
