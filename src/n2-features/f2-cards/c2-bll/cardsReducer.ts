@@ -120,6 +120,14 @@ export const getLearnCards = (cardsPack_id: string | undefined) => async (dispat
         dispatch(setIsLoading('error'))
     }
 }
+export const rateCardTC = (grade: number, card_id: string) => async (dispatch: Dispatch) => {
+    try {
+        const res = await cardsAPI.rateCard(grade, card_id)
+        console.log(res.data)
+    }catch (e) {
+
+    }
+}
 
 // type
 type CardsInitialStateType = typeof initialState

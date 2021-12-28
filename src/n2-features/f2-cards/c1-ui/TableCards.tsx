@@ -3,11 +3,12 @@ import styles from './TableCards.module.scss'
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../../n1-main/m2-bll/store";
 import {
-    CardType, deleteCardItemTC,
+    CardType,
+    deleteCardItemTC,
     GetCardsType,
-    setChangeSortCards, updateCardItemTC
+    setChangeSortCards,
+    updateCardItemTC
 } from "../c2-bll/cardsReducer";
-import {deleteCardPackTC, updateCardPackTC} from "../../../n1-main/m1-ui/Profile/profileReducer";
 import Modal, {ModalTypeAction} from "../../../n1-main/m1-ui/common/modal";
 
 const header = ['Question', 'Last Update', 'Grade', 'Actions']

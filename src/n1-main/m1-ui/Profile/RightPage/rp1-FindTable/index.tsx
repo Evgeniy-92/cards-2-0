@@ -3,12 +3,13 @@ import styles from './styles.module.scss'
 import {InputAdornment, TextField} from "@material-ui/core";
 import SearchIcon from '@material-ui/icons/Search';
 import SuperButton from "../../../common/c1-SuperButton/SuperButton";
-import {addCardPack, deleteCardPackTC, updateCardPackTC} from "../../profileReducer";
+import {addCardPack} from "../../profileReducer";
 import Modal, {ModalTypeAction} from "../../../common/modal";
 import {useDispatch, useSelector} from "react-redux";
 import {addCardTC} from "../../../../../n2-features/f2-cards/c2-bll/cardsReducer";
 import {AppRootStateType} from "../../../../m2-bll/store";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
+import ArrowBackOutlinedIcon from '@material-ui/icons/ArrowBackOutlined';
 
 type FindTableType = {
     namePage: string | undefined
@@ -24,6 +25,7 @@ const FindTable = (props: FindTableType) => {
     const [openModal, setOpenModal] = useState(false)
     const [type, setType] = useState<ModalTypeAction>('')
     const {id} = useParams()
+    const navigate = useNavigate()
     const updateCardPack = (value?: string, value2?: string) => {
         props.type === 'added' && (type === props.type && dispatch(addCardPack(value)))
         props.type === 'addedItem' && (type === props.type && dispatch(addCardTC(id, value2, value)))
@@ -34,10 +36,16 @@ const FindTable = (props: FindTableType) => {
         setOpenModal(true)
     }
 
+    const backHandler = () => {
+        navigate('/')
+    }
+
     return (
         <>
             <Modal openModal={openModal} setOpenModal={setOpenModal} setActionTC={updateCardPack} type={type}/>
-            <h1>{props.namePage}</h1>
+            {props.type === 'added'
+                ? <h1>{props.namePage}</h1>
+                : <h1 className={styles.header}><ArrowBackOutlinedIcon className={styles.arrow} onClick={backHandler} fontSize="large"/> {props.namePage}</h1>}
             <div className={styles.findTable}>
                 <div className={styles.findInput}>
                     <TextField id="outlined-basic"

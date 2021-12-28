@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import styles from "./style.module.scss"
-import {CardType, getLearnCards} from "../f2-cards/c2-bll/cardsReducer";
+import {CardType, getLearnCards, rateCardTC} from "../f2-cards/c2-bll/cardsReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../n1-main/m2-bll/store";
 import {useParams} from "react-router-dom";
@@ -13,7 +13,15 @@ const Learn = () => {
     const {id} = useParams<string>()
     const [card, setCard] = useState<any>({});
     const [isChecked, setIsChecked] = useState<boolean>(false);
-    const rating = ['Не знаю', 'Забыл', 'Долго думал', 'Перепутал', 'Ответил'];
+    const [valueGrade, setValueGrade] = useState<number>(0)
+
+    const rating = [
+        {name: 'Не знаю', value: 1},
+        {name: 'Забыл', value: 2},
+        {name: 'Долго думал', value: 3},
+        {name: 'Перепутал', value: 4},
+        {name: 'Ответил', value: 5},
+    ]
 
     useEffect(() => {
         dispatch(getLearnCards(id))
@@ -47,6 +55,10 @@ const Learn = () => {
         setIsChecked(!isChecked)
     }
 
+    const rateCard = (grade: number, card_id: string) => {
+        dispatch(rateCardTC(grade, card_id))
+    }
+
     return <ContainerAuth>
         <div className={styles.learnBlock}>
             {
@@ -65,8 +77,9 @@ const Learn = () => {
                         </div>
                         <div>
                             {rating.map((g, i) => (
-                                <button key={'grade-' + i} onClick={() => {
-                                }}>{g}</button>
+                                <button key={'grade-' + i} onClick={() => {setValueGrade(g.value)}}>
+                                    {g.name}
+                                </button>
                             ))}
                         </div>
 
@@ -74,7 +87,12 @@ const Learn = () => {
                 )
             }
             <div>
-                <button onClick={onNext}>Next question</button>
+                <button onClick={() => {
+                    onNext()
+                    rateCard(valueGrade, card._id)
+                    setValueGrade(0)
+                }
+                }>Next question</button>
             </div>
 
         </div>

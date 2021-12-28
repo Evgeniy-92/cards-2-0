@@ -11,7 +11,6 @@ import {
     updateCardPackTC
 } from "../../profileReducer";
 import Modal, {ModalTypeAction} from "../../../common/modal";
-import {setPage} from "../../../../../n2-features/f2-cards/c2-bll/cardsReducer";
 
 
 const header = ['Name', 'Cards', 'Last Update', 'Created by', 'Actions']
@@ -64,7 +63,7 @@ const Table = () => {
         ((nameHeader === 'Last Update' && sortCards !== 0) && styles.activeUpdate)
 
     const navigate = useNavigate()
-    const handler = (id: string) => {
+    const CardsHandler = (id: string) => {
         navigate(`/cards/${id}`)
         setCardID(id)
     }
@@ -106,7 +105,7 @@ const Table = () => {
                             <div className={styles.row}>
 
 
-                                <span className={styles.rowItem} id={'table'} onClick={() => nameHandler(row._id)}>{row.name}</span>
+                                <span className={`${styles.rowItem} ${styles.nameStyle}`} id={'table'} onClick={() => nameHandler(row._id)}>{row.name}</span>
                                 <span className={styles.rowItem} id={'table'}>{row.cardsCount}</span>
                                 <span className={styles.rowItem} id={'table'}>{row.updated.slice(0, 10)}</span>
                                 <span className={styles.rowItem} id={'table'}> {row.user_name}</span>
@@ -121,8 +120,8 @@ const Table = () => {
                                     </>)
                                     }
                                     <span onClick={() => {
-                                        handler(row._id)
-                                    }} className={styles.btn}>Learn</span>
+                                        CardsHandler(row._id)
+                                    }} className={styles.btn}>Cards</span>
                                 </div>
 
                             </div>

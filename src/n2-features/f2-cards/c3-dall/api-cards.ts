@@ -23,6 +23,9 @@ export const cardsAPI = {
     },
     updateCardItem: (value: string, _id: string) => {
         return axiosInstance.put('cards/card', {card: {question: value, _id: _id}})
+    },
+    rateCard: (grade: number, card_id: string) => {
+        return axiosInstance.put("cards/grade", {grade, card_id})
     }
 };
 
