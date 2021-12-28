@@ -56,6 +56,7 @@ const Learn = () => {
     }
 
     const rateCard = (grade: number, card_id: string) => {
+        if (valueGrade <= 0) return
         dispatch(rateCardTC(grade, card_id))
     }
 
@@ -95,7 +96,8 @@ const Learn = () => {
                     rateCard(valueGrade, card._id)
                     setValueGrade(0)
                 }
-                }>Next question</button>
+                }>Next question
+                </button>
             </div>
 
         </div>
