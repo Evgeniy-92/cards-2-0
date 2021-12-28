@@ -35,7 +35,7 @@ export const forgotPassword = (email: string) => (dispatch: Dispatch) => {
     const data = {
         email: email,
         from: 'test-front-admin <ev.drozd.2020@gmail.com>',
-        message: `<div style="background-color: #8865c0; padding: 15px">password recovery link: <a href='http://localhost:3000/#/new-pass/$token$'>link</a></div>`,
+        message: `<div style="background-color: #8865c0; padding: 15px">password recovery link: <a href='https://evgeniy-92.github.io/cards-2-0/#/new-pass/$token$'>link</a></div>`,
     }
 
     dispatch(setIsLoading('loading'))
