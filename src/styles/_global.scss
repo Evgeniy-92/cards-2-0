@@ -58,11 +58,16 @@ body {
 
   ::-webkit-scrollbar {
     height: 5px;
-    width: 4px;
+    width: 6px;
     background: #ECECF9;
   }
 
   ::-webkit-scrollbar-thumb:horizontal {
+    background: #8865c0;
+    border-radius: 20px;
+  }
+
+  ::-webkit-scrollbar-thumb:vertical {
     background: #8865c0;
     border-radius: 20px;
   }
