@@ -77,7 +77,10 @@ const Learn = () => {
                         </div>
                         <div>
                             {rating.map((g, i) => (
-                                <button key={'grade-' + i} onClick={() => {setValueGrade(g.value)}}>
+                                <button disabled={g.value === valueGrade}
+                                        key={'grade-' + i}
+                                        onClick={() => {setValueGrade(g.value)}}
+                                >
                                     {g.name}
                                 </button>
                             ))}

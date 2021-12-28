@@ -31,3 +31,7 @@ button {
 button:hover {
   color: white;
 }
+button:disabled {
+  background-color: #47294f;
+  color: #dbd5d5;
+}
