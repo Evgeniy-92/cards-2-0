@@ -11,6 +11,7 @@ import {
 } from "../../../n2-features/f1-auth/a3-forget/f1-ui/ForgetPassword";
 import {CheckEmail} from "../../../n2-features/f1-auth/a3-forget/f1-ui/CheckEmail";
 import {CardsContainer} from "../../../n2-features/f2-cards/c1-ui/CardsContainer";
+import Learn from "../../../n2-features/f3-learn/learn";
 
 
 export const AppRoutes = () => {
@@ -27,6 +28,7 @@ export const AppRoutes = () => {
                 <Route path='*' element={<NotFound/>}/>
                 <Route path='test' element={<TestComponent/>}/>
                 <Route path='cards/:id' element={<CardsContainer/>}/>
+                <Route path='learn/:id' element={<Learn/>}/>
             </Routes>
         </div>
     )

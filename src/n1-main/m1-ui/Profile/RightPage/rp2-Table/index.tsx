@@ -11,10 +11,12 @@ import {
     updateCardPackTC
 } from "../../profileReducer";
 import Modal, {ModalTypeAction} from "../../../common/modal";
+import {setPage} from "../../../../../n2-features/f2-cards/c2-bll/cardsReducer";
 
+
+const header = ['Name', 'Cards', 'Last Update', 'Created by', 'Actions']
 
 const Table = () => {
-    const header = ['Name', 'Cards', 'Last Update', 'Created by', 'Actions']
     const rows = useSelector<AppRootStateType, GetCardsType | null>((state) => state.profile.cards)
     const sortCards = useSelector<AppRootStateType, number>((state) => state.profile.sortByCards)
     const profileID = useSelector<AppRootStateType, string>((state) => state.login.profileData._id)
@@ -66,6 +68,10 @@ const Table = () => {
         navigate(`/cards/${id}`)
         setCardID(id)
     }
+    const nameHandler = (id: string) => {
+        //dispatch(setPage(num.length))
+        navigate(`/learn/${id}`)
+    }
 
     const updateCardPack = (value?: string) => {
         type === 'edit' && dispatch(updateCardPackTC({cardsPack: {_id: cardID, name: value}}))
@@ -99,7 +105,8 @@ const Table = () => {
                         <div className={styles.rowe} key={row._id}>
                             <div className={styles.row}>
 
-                                <span className={styles.rowItem} id={'table'}>{row.name}</span>
+
+                                <span className={styles.rowItem} id={'table'} onClick={() => nameHandler(row._id)}>{row.name}</span>
                                 <span className={styles.rowItem} id={'table'}>{row.cardsCount}</span>
                                 <span className={styles.rowItem} id={'table'}>{row.updated.slice(0, 10)}</span>
                                 <span className={styles.rowItem} id={'table'}> {row.user_name}</span>
