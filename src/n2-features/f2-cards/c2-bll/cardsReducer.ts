@@ -9,7 +9,7 @@ const initialState = {
     sortName: "updated",
     searchName: "",
     page: 1,
-    rowsPerPage: 9,
+    pageCount: 9,
 }
 
 export const cardsReducer = (state: CardsInitialStateType = initialState, action: CardsActionType): CardsInitialStateType => {
@@ -36,7 +36,7 @@ export const cardsReducer = (state: CardsInitialStateType = initialState, action
         case "CARDS/SET-ROWS-PER-PAGE":
             return {
                 ...state,
-                rowsPerPage: action.value
+                pageCount: action.value
             }
         default:
             return state
@@ -58,11 +58,8 @@ export const setRowsPerPage = (value: number) => ({type: 'CARDS/SET-ROWS-PER-PAG
 //thunk
 export const getCards = (cardsPack_id: string | undefined) => async (dispatch: Dispatch, getState: () => AppRootStateType) => {
     const state = getState()
-    const sortName = state.cards.sortName
-    const sortByCards = state.cards.sortByCards
+    const {sortName, sortByCards, page, pageCount} = state.cards
     const cardAnswer = state.cards.searchName
-    const page = state.cards.page
-    const pageCount = state.cards.rowsPerPage
     dispatch(setIsLoading('loading'))
     try {
         dispatch(setIsLoading('idle'))

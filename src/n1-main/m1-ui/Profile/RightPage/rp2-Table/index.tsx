@@ -17,7 +17,7 @@ const header = ['Name', 'Cards', 'Last Update', 'Created by', 'Actions']
 
 const Table = () => {
     const rows = useSelector<AppRootStateType, GetCardsType | null>((state) => state.profile.cards)
-    const sortCards = useSelector<AppRootStateType, number>((state) => state.profile.sortByCards)
+    const sortCards = useSelector<AppRootStateType, number>((state) => state.profile.sortCards)
     const profileID = useSelector<AppRootStateType, string>((state) => state.login.profileData._id)
     const [nameHeader, setNameHeader] = useState('')
     const [openModal, setOpenModal] = useState(false)

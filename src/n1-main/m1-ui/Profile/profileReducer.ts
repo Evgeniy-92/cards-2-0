@@ -8,11 +8,11 @@ const initialState = {
     avatar: "https://cdn-icons-png.flaticon.com/512/4530/4530930.png",
     cards: null as (null | GetCardsType),
     sortName: 'updated',
-    sortByCards: 0 as (0 | 1),
+    sortCards: 0 as (0 | 1),
     packName: "",
     newCard: {},
     page: 1,
-    rowsPerPage: 9,
+    pageCount: 9,
     min: 0,
     max: 110,
     user_id: ""
@@ -30,7 +30,7 @@ export const profileReducer = (state: ProfileInitialStateType = initialState, ac
             }
         case "PROFILE/CHANGE_SORT_CARDS":
             return {
-                ...state, sortByCards: action.sort, sortName: action.sortName
+                ...state, sortCards: action.sort, sortName: action.sortName
             }
         case "PROFILE/CHANGE-PACK-NAME":
             return {
@@ -44,7 +44,7 @@ export const profileReducer = (state: ProfileInitialStateType = initialState, ac
         case "PROFILE/SET-ROWS-PER-PAGE":
             return {
                 ...state,
-                rowsPerPage: action.value
+                pageCount: action.value
             }
         case "PROFILE/SET_CARDS_NUMBER":
             return {
@@ -93,11 +93,9 @@ export const changeUserNameTC = (data: ProfileType) => (dispatch: Dispatch) => {
         })
 }
 
-export const getCardsPack = (sortCards: number, sortName: string, min: number, max: number, user_id: string) => async (dispatch: Dispatch, getState: () => AppRootStateType) => {
+export const getCardsPack = () => async (dispatch: Dispatch, getState: () => AppRootStateType) => {
     const state = getState()
-    const packName = state.profile.packName
-    const page = state.profile.page
-    const pageCount = state.profile.rowsPerPage
+    const {packName, page, pageCount, sortCards, sortName, min, max, user_id} = state.profile
     dispatch(setIsLoading('loading'))
 
     try {
