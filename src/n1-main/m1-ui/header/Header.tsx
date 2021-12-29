@@ -15,7 +15,6 @@ export const Header = () => {
             <nav className={s.navigate}>
                 <Link to={'/login'} onClick={logout}>{inAuth ? 'log Out' : 'Login'}</Link>
                 <Link to={'/profile'}>Profile</Link>
-                <Link to={'/test'}>Test component</Link>
             </nav>
         </div>
     )

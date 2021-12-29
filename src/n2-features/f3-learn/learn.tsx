@@ -1,19 +1,23 @@
-import React, {useEffect, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import styles from "./style.module.scss"
 import {CardType, getLearnCards, rateCardTC} from "../f2-cards/c2-bll/cardsReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../n1-main/m2-bll/store";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import ContainerAuth from "../../n1-main/m1-ui/common/c4-containerAuth";
+import {Button, FormControlLabel, FormLabel, Radio, RadioGroup} from "@material-ui/core";
 
 
 const Learn = () => {
     const cards = useSelector<AppRootStateType, any>(state => state.cards.cards?.cards)
     const dispatch = useDispatch()
     const {id} = useParams<string>()
+    const packName = useSelector<AppRootStateType, string | undefined>(state => state.profile.cards?.cardPacks.filter(el => el._id === id)[0].name)
     const [card, setCard] = useState<any>({});
     const [isChecked, setIsChecked] = useState<boolean>(false);
     const [valueGrade, setValueGrade] = useState<number>(0)
+    const navigate = useNavigate()
+
 
     const rating = [
         {name: 'Не знаю', value: 1},
@@ -28,7 +32,6 @@ const Learn = () => {
     }, [dispatch, id])
 
     useEffect(() => {
-        console.log('cards', cards)
         if (cards?.length > 0) setCard(getCard(cards));
     }, [cards]);
 
@@ -59,45 +62,57 @@ const Learn = () => {
         if (valueGrade <= 0) return
         dispatch(rateCardTC(grade, card_id))
     }
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setValueGrade((Number((e.target as HTMLInputElement).value)));
+    };
+    const onCancel = () => {
+        navigate('/')
+    }
 
     return <ContainerAuth>
         <div className={styles.learnBlock}>
             {
                 !isChecked ? (
                     <>
-                        <div className={styles.text}>Question: {card.question}</div>
-                        <div>
-                            <button onClick={onCheck}>check</button>
-                        </div>
+                        <h2 className={styles.headerCards}>Learn "{packName}"</h2>
+                        <div className={styles.question}><span className={styles.bold}>Question</span>: {card.question}</div>
+                        {/*<div>*/}
+                        {/*    <Button variant="contained" color="primary" onClick={onCheck}>check</Button>*/}
+                        {/*</div>*/}
                     </>
                 ) : (
                     <>
-                        <div className={styles.text}>Answer: {card.answer}</div>
+                        <h2 className={styles.headerCards}>Learn "{packName}"</h2>
+                        <div className={styles.question}><span className={styles.bold}>Question:</span> {card.question}</div>
+                        <div className={styles.answer}><span className={styles.bold}>Answer:</span> {card.answer}</div>
+
                         <div>
-                            <button onClick={onCheck}>Back to the question</button>
-                        </div>
-                        <div>
+                            <FormLabel component="legend">Rate yourself:</FormLabel>
                             {rating.map((g, i) => (
-                                <button disabled={g.value === valueGrade}
-                                        key={'grade-' + i}
-                                        onClick={() => {setValueGrade(g.value)}}
+                                <RadioGroup
+                                    onClick={() => {setValueGrade(g.value)}}
+                                    key={'grade-' + i}
+                                    value={valueGrade}
+                                    onChange={handleChange}
+                                    row
                                 >
-                                    {g.name}
-                                </button>
+                                    <FormControlLabel  value={g.value} control={<Radio color="primary" />} label={g.name}/>
+                                </RadioGroup>
                             ))}
                         </div>
-
                     </>
                 )
             }
-            <div>
-                <button onClick={() => {
+            <div className={styles.buttonBlock}>
+                <Button variant="contained" color="secondary" onClick={onCancel}>cancel</Button>
+                {!isChecked && < Button variant="contained" color="primary" onClick={onCheck}>show answer</Button>}
+                <Button style={{marginRight: "20px"}} variant="contained" color="primary" onClick={() => {
                     onNext()
                     rateCard(valueGrade, card._id)
                     setValueGrade(0)
                 }
                 }>Next question
-                </button>
+                </Button>
             </div>
 
         </div>
