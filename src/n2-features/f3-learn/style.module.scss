@@ -1,11 +1,24 @@
 .learnBlock {
   width: 500px;
   max-height: 700px;
+  min-height: 350px;
   padding: 30px 10px 30px 30px;
   max-width: 100%;
   max-width: 100%;
   border-radius: 5px;
   background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.questionBlock {
+  .headerCards {
+    margin-bottom: 60px;
+  }
+  .question {
+    font-size: 20px;
+  }
 }
 
 .question {
@@ -34,4 +47,5 @@
 .headerCards {
   text-align: center;
   margin-bottom: 30px;
+  font-size: 30px;
 }

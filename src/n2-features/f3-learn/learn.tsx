@@ -73,13 +73,10 @@ const Learn = () => {
         <div className={styles.learnBlock}>
             {
                 !isChecked ? (
-                    <>
+                    <div className={styles.questionBlock}>
                         <h2 className={styles.headerCards}>Learn "{packName}"</h2>
                         <div className={styles.question}><span className={styles.bold}>Question</span>: {card.question}</div>
-                        {/*<div>*/}
-                        {/*    <Button variant="contained" color="primary" onClick={onCheck}>check</Button>*/}
-                        {/*</div>*/}
-                    </>
+                    </div>
                 ) : (
                     <>
                         <h2 className={styles.headerCards}>Learn "{packName}"</h2>
