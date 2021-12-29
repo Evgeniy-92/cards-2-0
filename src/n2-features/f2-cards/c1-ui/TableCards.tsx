@@ -71,29 +71,29 @@ const TableCards = () => {
     }
 
     return (
-        <table className={styles.table}>
+        <div className={styles.table}>
             <Modal openModal={openModal} setOpenModal={setOpenModal} setActionTC={updateCardPack} type={type}/>
-            <thead className={styles.thead}>
+            <div className={styles.thead}>
 
             {header.map(headerGroup => (
-                <tr className={`${styles.tableHeader} ${changeStyleSortCard}`}
+                <div className={`${styles.tableHeader} ${changeStyleSortCard}`}
                     key={headerGroup}
                     onClick={() => {
                         changeSortCards(headerGroup)
                     }}>
-                    <th className={styles.column}>
+                    <h4 className={styles.column}>
                         {headerGroup}
-                    </th>
-                </tr>
+                    </h4>
+                </div>
             ))}
-            </thead>
+            </div>
 
-            <tbody className={styles.rows}>
+            <div className={styles.rows}>
 
             {rows?.cards.map((row: CardType) => {
                 return (
-                    <tr className={styles.rowe} key={row._id}>
-                        <td className={styles.row}>
+                    <div className={styles.rowe} key={row._id}>
+                        <div className={styles.row}>
 
                             <span className={styles.rowItem} id={'table'}>{row.question}</span>
                             <span className={styles.rowItem} id={'table'}>{row.updated.slice(0, 10)}</span>
@@ -110,13 +110,13 @@ const TableCards = () => {
                                 }
                             </div>
 
-                        </td>
-                    </tr>
+                        </div>
+                    </div>
                 )
             })}
 
-            </tbody>
-        </table>
+            </div>
+        </div>
     );
 };
 
