@@ -5,7 +5,14 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../n1-main/m2-bll/store";
 import {useNavigate, useParams} from "react-router-dom";
 import ContainerAuth from "../../n1-main/m1-ui/common/c4-containerAuth";
-import {Button, FormControlLabel, FormLabel, Radio, RadioGroup} from "@material-ui/core";
+import {
+    Button,
+    FormControlLabel,
+    FormLabel,
+    Radio,
+    RadioGroup,
+    withStyles
+} from "@material-ui/core";
 
 
 const Learn = () => {
@@ -93,7 +100,7 @@ const Learn = () => {
                                     onChange={handleChange}
                                     row
                                 >
-                                    <FormControlLabel  value={g.value} control={<Radio color="primary" />} label={g.name}/>
+                                    <FormControlLabel  value={g.value} control={<Radio/>} label={g.name}/>
                                 </RadioGroup>
                             ))}
                         </div>
@@ -101,9 +108,9 @@ const Learn = () => {
                 )
             }
             <div className={styles.buttonBlock}>
-                <Button variant="contained" color="secondary" onClick={onCancel}>cancel</Button>
-                {!isChecked && < Button variant="contained" color="primary" onClick={onCheck}>show answer</Button>}
-                <Button style={{marginRight: "20px"}} variant="contained" color="primary" onClick={() => {
+                <Button variant="contained" size='small' onClick={onCancel}>Cancel</Button>
+                {!isChecked && <Button variant="contained" size='small' onClick={onCheck}>Show answer</Button>}
+                <Button style={{marginRight: "20px"}} variant="contained" size='small' onClick={() => {
                     onNext()
                     rateCard(valueGrade, card._id)
                     setValueGrade(0)

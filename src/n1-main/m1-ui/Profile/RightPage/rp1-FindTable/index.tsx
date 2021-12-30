@@ -1,6 +1,6 @@
 import React, {ChangeEvent, useState} from 'react';
 import styles from './styles.module.scss'
-import {Button, InputAdornment, TextField} from "@material-ui/core";
+import {Button, InputAdornment, TextField, withStyles} from "@material-ui/core";
 import SearchIcon from '@material-ui/icons/Search';
 import SuperButton from "../../../common/c1-SuperButton/SuperButton";
 import {addCardPack} from "../../profileReducer";
@@ -62,7 +62,7 @@ const FindTable = (props: FindTableType) => {
                                        </InputAdornment>
                                    ),
                                }}/>
-                    <Button onClick={props.searchHandler} variant="contained" color="primary" size="small">Search</Button>
+                    <Button onClick={props.searchHandler} variant="contained" size="small">Search</Button>
                 </div>
                 {(userIDCard?.packUserId === profileID || props.type === 'added') && (
                     <SuperButton className={styles.btn} onClick={buttonHandler.bind(null)}>

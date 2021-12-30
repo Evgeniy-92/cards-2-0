@@ -33,6 +33,7 @@ const Paginate = (props: PaginateType) => {
                         size="small"
                         shape="rounded"
                         color="primary"
+                        variant="outlined"
                         page={props.page}
                         onChange={handleChange}
             />
