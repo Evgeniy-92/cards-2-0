@@ -13,8 +13,9 @@ export const Header = () => {
     return (
         <div className={s.headerContainer}>
             <nav className={s.navigate}>
-                <Link to={'/login'} onClick={logout}>{inAuth ? 'log Out' : 'Login'}</Link>
-                <Link to={'/profile'}>Profile</Link>
+                <Link to={'/login'} onClick={logout}>{inAuth ? 'Log Out' : 'Log In'}</Link>
+                {!inAuth && <Link to={'/register'}>{'Sing Up'}</Link>}
+                {/*<Link to={'/profile'}>Profile</Link>*/}
             </nav>
         </div>
     )

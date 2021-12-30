@@ -19,7 +19,7 @@ const SortTable = () => {
 
     return (
         <div className={styles.rangeBlock}>
-            <span>Cards limit</span>
+            <span className={styles.title}>Cards limit</span>
             <div className={styles.range}>
                 <SuperDoubleRange
                     value={values}

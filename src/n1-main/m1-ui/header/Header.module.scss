@@ -1,14 +1,24 @@
 .headerContainer {
-  background-color: #8865c0;
+  background-color: #ebe0e9;
   height: 70px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
 }
 
 .navigate {
   display: flex;
   justify-content: space-between;
-  width: 130px;
+  margin-left: 25px;
+  width: 180px;
+  a {
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 20px;
+    line-height: 27px;
+    color: #ebe0e9;
+    background-color: #9890c7;
+    padding: 10px;
+    border-radius: 5px;
+  }
 }

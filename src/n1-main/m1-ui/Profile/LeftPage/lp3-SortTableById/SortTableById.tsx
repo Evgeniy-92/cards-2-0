@@ -17,7 +17,7 @@ const SortTableById = () => {
 
     return (
         <div className={styles.idSortBlock}>
-            <span>View packs</span>
+            <span className={styles.title}>View packs</span>
             <div>
                 <span className={styles.btn} onClick={onMyClick}>My</span>
                 <span className={styles.btn} onClick={onAllClick}>All</span>

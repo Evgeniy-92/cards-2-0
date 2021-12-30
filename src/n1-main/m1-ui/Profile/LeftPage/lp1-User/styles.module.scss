@@ -8,13 +8,15 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
-  border: 5px solid rgba(0, 151, 8, 0.2);
+  border: 5px solid #d9c8da;
 }
 
 .profileInfo {
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-around;
 }
 
 .avatar {

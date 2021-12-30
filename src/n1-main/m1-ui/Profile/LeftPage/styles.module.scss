@@ -31,6 +31,7 @@
   background: white;
   box-shadow: 0 8px 15px rgba(0, 0, 0, .1);
   transition: .3s;
+  cursor: pointer;
 }
 
 .btn:hover {
@@ -60,6 +61,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.title {
+  font-family: SF UI Display;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 19px;
+  color: #2D2E46;
+  margin-bottom: 15px;
 }
 
 
